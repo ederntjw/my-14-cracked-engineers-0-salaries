@@ -1,0 +1,20 @@
+{
+  "name": "eugenes-engineering-team",
+  "version": "1.0.0",
+  "description": "Eugene's engineering team — 14 specialist AI agents, a 9-step build workflow, and a full context system for building production software",
+  "private": true,
+  "keywords": [
+    "claude-code",
+    "agents",
+    "engineering-team",
+    "ai-development",
+    "software-engineering"
+  ],
+  "author": {
+    "name": "Eugene Zhang"
+  },
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=18"
+  }
+}
