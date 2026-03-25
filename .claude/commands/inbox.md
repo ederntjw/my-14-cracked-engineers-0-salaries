@@ -11,6 +11,8 @@ When this command is invoked:
 1. **Scan** `context/inbox/` for all files
 2. If empty, tell the user "Inbox is clear — nothing to process" and stop
 
+This activates **Maya** (head of strategy) to read and process everything.
+
 For each file found:
 
 ## Step 1: Read and Analyze
@@ -46,7 +48,7 @@ Add a note to STATUS.md documenting:
 
 ## Step 5: Update the team
 If the documents change scope or direction:
-- Flag which agents need to know (planner for scope changes, architect for technical changes, etc.)
+- Flag who needs to know (Jake for scope changes, Sara for technical changes, etc.)
 - Suggest whether a re-plan is needed
 
 Always explain documents in plain English. You should never have to read the raw document yourself unless you want to.

@@ -8,16 +8,18 @@ You just downloaded your engineering team. This guide explains what you have, ho
 
 Think of this folder like hiring a 14-person engineering team that lives inside your computer. Instead of one AI assistant that does everything okay, you get specialists:
 
-- A **strategist** who translates your business idea into a technical plan
-- A **planner** who breaks work into steps with checklists
-- An **architect** who designs how the pieces fit together
-- **Builders** who write the actual code (with tests first, every time)
-- A **security expert** who checks for vulnerabilities before anything ships
-- **Code reviewers** who catch bugs and bad patterns
-- **Testers** who verify everything works
-- And more (14 in total)
+- **Maya** (strategist) translates your business idea into a technical plan
+- **Jake** (planner) breaks work into steps with checklists
+- **Sara** (architect) designs how the pieces fit together
+- **Max** (test engineer) writes tests first, every time
+- **Liam** (frontend) builds the interfaces you and your users see
+- **Elena** (security) checks for vulnerabilities before anything ships
+- **Nina** (code reviewer) catches bugs and bad patterns
+- **Aisha** (QA) runs end-to-end browser tests
+- **Tom** (DevOps) fixes builds when they break
+- Plus **Yuki** (refactoring), **Rachel** (docs), **Andre** (database), **Fatima** (data), and **Dave** (auditing)
 
-You never have to call these by name. Describe what you want, and the right one activates.
+You never have to call them by name. Describe what you want, and the right person activates. See `docs/TEAM.md` for the full org chart.
 
 **The key difference from regular AI coding:** This team has guardrails. Code gets planned before it's built. It gets reviewed after it's built. Tests prove it works. Security gets checked. Nothing ships without passing through multiple quality gates. This is how professional software teams operate — except these specialists work 24/7 and never forget context.
 

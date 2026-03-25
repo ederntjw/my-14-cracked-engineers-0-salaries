@@ -6,7 +6,7 @@ description: Audit the codebase against the project's original requirements. Che
 
 Also triggers when you say: "audit the backend", "check for gaps", "are we missing anything", "compare against the spec", "what's drifted", "check the architecture"
 
-This command activates the **codebase-auditor** and **database-reviewer** agents against the project's original requirement documents.
+This command activates **Dave** (codebase auditor) and **Andre** (database architect) against the project's original requirement documents.
 
 ## Process
 

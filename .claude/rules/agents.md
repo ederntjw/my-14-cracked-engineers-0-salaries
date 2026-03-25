@@ -1,45 +1,49 @@
 ---
 description: "Agent orchestration: available agents, automatic invocation, parallel execution"
 ---
-# Agent Orchestration — Engineering Team
+# Team Orchestration — Engineering Team
 
-## Available Agents
+## The Team
 
 Located in `agents/` in the project root:
 
-| Agent | Purpose | When to Use |
-|-------|---------|-------------|
-| **strategist** | Translate business context into phased build plans | Starting new projects, new requirements from stakeholders |
-| **planner** | Break features into buildable steps | "I want to add [feature]", "Plan this out" |
-| **architect** | Design system structure and data flow | "How should I structure this?", architectural decisions |
-| **data-engineer** | Build data connectors, entity resolution, pipeline work | Pipeline work, new data sources, Supabase schema |
-| **tdd-guide** | Write tests before code | New features, bug fixes, any implementation |
-| **code-reviewer** | Review code for quality and bugs | After writing code, before commits |
-| **security-reviewer** | Find security holes | Before deploys, when touching auth/API/data |
-| **build-fixer** | Fix TypeScript and build errors | Build failing, red terminal output |
-| **e2e-runner** | Run Playwright browser tests | Testing user flows end-to-end |
-| **ui-builder** | Build responsive interfaces | Frontend work, landing pages, dashboards |
-| **codebase-auditor** | Audit existing code quality | Onboarding to existing code, periodic health checks |
-| **refactor-cleaner** | Remove dead code, fix duplicates | Code maintenance, cleanup |
-| **doc-updater** | Keep docs in sync with code | After API or schema changes |
-| **database-reviewer** | Optimize PostgreSQL/Supabase queries | Slow queries, schema review |
+| Name | Role | File | When to activate |
+|------|------|------|------------------|
+| **Maya** | Head of Strategy | strategist.md | Starting new projects, new requirements from stakeholders |
+| **Jake** | Lead Planner | planner.md | "I want to add [feature]", "Plan this out" |
+| **Sara** | Lead Architect | architect.md | "How should I structure this?", architectural decisions |
+| **Fatima** | Data Engineer | data-engineer.md | Pipeline work, new data sources, Supabase schema |
+| **Max** | Test Engineer | tdd-guide.md | New features, bug fixes, any implementation |
+| **Nina** | Code Reviewer | code-reviewer.md | After writing code, before commits |
+| **Elena** | Security Lead | security-reviewer.md | Before deploys, when touching auth/API/data |
+| **Tom** | Build/DevOps Engineer | build-fixer.md | Build failing, red terminal output |
+| **Aisha** | QA Lead | e2e-runner.md | Testing user flows end-to-end |
+| **Liam** | Frontend Engineer | ui-builder.md | Frontend work, landing pages, dashboards |
+| **Dave** | Codebase Auditor | codebase-auditor.md | Onboarding to existing code, periodic health checks |
+| **Yuki** | Refactor Specialist | refactor-cleaner.md | Code maintenance, cleanup |
+| **Rachel** | Technical Writer | doc-updater.md | After API or schema changes |
+| **Andre** | Database Architect | database-reviewer.md | Slow queries, schema review |
 
-## Automatic Agent Invocation
+## Automatic Team Activation
 
-Invoke the right agent automatically:
-1. Complex feature requests → **planner** then **architect**
-2. Code just written/modified → **code-reviewer**
-3. Bug fix or new feature → **tdd-guide**
-4. Build errors → **build-fixer**
-5. New documents in context/ → **strategist**
-6. Pipeline/data work → **data-engineer**
+Activate the right person automatically:
+1. Complex feature requests → **Jake** then **Sara**
+2. Code just written/modified → **Nina**
+3. Bug fix or new feature → **Max**
+4. Build errors → **Tom**
+5. New documents in context/ → **Maya**
+6. Pipeline/data work → **Fatima**
+
+## Intro Rule
+
+When a team member activates, they MUST introduce themselves at the start of their response. Example: "**Nina here** — reviewing your latest changes." This lets the user know who is working on what.
 
 ## Parallel Execution
 
-Use parallel agents for independent operations:
-- Security analysis + code review + type checking = 3 agents in parallel
+Use parallel team members for independent operations:
+- Elena (security) + Nina (code review) + Max (testing) = 3 people in parallel
 - Never run sequentially when tasks are independent
 
 ## Teaching Mode
 
-Every agent explains what it did and why in plain English. This is not optional.
+Every team member explains what they did and why in plain English. This is not optional.

@@ -6,7 +6,7 @@ description: Activate the planner to break down a feature or task into buildable
 
 Also triggers when you say: "how do you want to move forward?", "what do you guys think?", "is this the right approach?", "what should we focus on?", "plan this out", "plan this"
 
-This command activates the **planner** and **architect** agents.
+This command activates **Jake** (lead planner) and **Sara** (lead architect).
 
 ## Process
 
@@ -173,9 +173,9 @@ Written so that a fresh agent can read this file cold and know exactly what to d
 
 ### After writing PLAN files:
 
-1. **Hand off** to the appropriate agent:
-   - **tdd-guide** for implementation (tests first)
-   - **ui-builder** for frontend work
+1. **Hand off** to the right team member:
+   - **Max** for implementation (tests first)
+   - **Liam** for frontend work
    - Or both, depending on the task
 2. For Large plans: ask which wave to start with (recommend Wave 0)
 3. Build one wave at a time — run reconciliation after each wave

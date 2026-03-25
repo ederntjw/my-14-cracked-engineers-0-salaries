@@ -6,7 +6,7 @@ description: Run a comprehensive code review on recent changes. Checks security,
 
 Also triggers when you say: "review this", "check the code", "is this clean?", "is this ready?", "did you check it thoroughly?"
 
-This command activates the **code-reviewer** and **security-reviewer** agents.
+This command activates **Nina** (code reviewer) and **Elena** (security lead).
 
 ## Process
 

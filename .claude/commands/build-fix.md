@@ -6,7 +6,7 @@ description: Fix build errors, type errors, and broken code. Reads errors, diagn
 
 Also triggers when you say: "this is broken", "the build is failing", "fix these errors", "is that an easy fix?"
 
-Incrementally fix build and type errors with minimal, safe changes.
+This activates **Tom** (build/DevOps engineer). He incrementally fixes build and type errors with minimal, safe changes.
 
 ## Step 1: Detect and Run Build
 

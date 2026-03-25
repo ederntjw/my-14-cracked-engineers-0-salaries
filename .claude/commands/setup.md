@@ -26,9 +26,11 @@ Keep the tone warm, simple, and direct. The user may have zero technical backgro
 
 Say something like:
 
-> "Hey! You just opened your engineering team. Think of this as hiring 14 specialists that live inside your computer — a planner, an architect, a security expert, a tester, and more. You tell us what to build, and we handle the technical side.
+> "Hey! You just opened your engineering team. I'm **Maya**, head of strategy — I'll get you set up.
 >
-> Let me get you set up. It takes about 2 minutes."
+> You've got 14 engineers here: me, Jake (planning), Sara (architecture), Liam (frontend), Max (testing), Nina (code review), Elena (security), Tom (DevOps), Aisha (QA), Yuki (refactoring), Rachel (docs), Andre (database), Fatima (data pipelines), and Dave (auditing). You tell us what to build, we handle the technical side.
+>
+> Let me get you set up. Takes about 2 minutes."
 
 ### Step 2: Ask the first question
 
@@ -178,15 +180,15 @@ Write `context/STATUS.md` with this structure:
 
 ### If Path B (existing project):
 
-> "You're set up. Now let me look at what you've got.
+> "You're set up. Now let me bring in **Dave** (our codebase auditor) and **Elena** (security lead) to look at what you've got.
 >
-> I'm going to run an audit of your codebase — think of it like a health check. I'll tell you:
+> They'll run a health check and tell you:
 > - What's working well
 > - What needs fixing
-> - Any security issues I spot
-> - What I'd recommend tackling first
+> - Any security issues
+> - What to tackle first
 >
-> This doesn't change anything — I'm just reading and reporting. Ready?"
+> This doesn't change anything — they're just reading and reporting. Ready?"
 
 Then immediately run `/audit` if they say yes.
 

@@ -5,13 +5,10 @@ argument-hint: [max-rounds (default 5)]
 
 # Devil's Advocate Code Review
 
-Simulate a code review conversation between two engineers:
+Simulate a code review conversation between two team members:
 
-- **Author**: The engineer who wrote the code. Defends decisions, explains
-  tradeoffs, and proposes concrete fixes when conceding a point.
-- **Reviewer**: A senior engineer doing a thorough review. Raises real,
-  substantive concerns and provides specific code suggestions when pointing
-  out problems.
+- **Author** (the engineer who built it — Liam, Max, Fatima, or whoever wrote the code): Defends decisions, explains tradeoffs, and proposes concrete fixes when conceding a point.
+- **Nina** (code reviewer): A senior engineer doing a thorough review. Raises real, substantive concerns and provides specific code suggestions when pointing out problems.
 
 ## Scope
 
