@@ -11,19 +11,24 @@ I built this with no CS degree. I have a Master's in Accounting and Financial Ma
 When you download this folder and open it in Claude Code, you get:
 
 - **14 specialist agents** — a strategist, planner, architect, builders, security expert, code reviewers, testers, and more
-- **A 9-step build workflow** with quality gates that catch bugs, security holes, and broken code before anything ships
-- **An adversarial code review** where two AI engineers debate your code before it gets tested
+- **Self-healing QA** — the team finds bugs, fixes them, and re-verifies automatically. You only get pulled in when a human decision is genuinely needed
+- **7-check evidence protocol** — every "it works" claim comes with actual command output as proof (BUILD, TEST, LINT, FUNCTIONALITY, ARCHITECT, TODO, ERROR_FREE)
+- **Smart model routing** — simple tasks run on cheaper models, complex tasks get the heavy reasoning. Signal-based, not static. Your bill stays low without sacrificing quality
+- **Auto-detection** — drop the team into any codebase and it figures out the tech stack, test runner, and build commands without asking
+- **Auto-recovery** — build fails? Tests break? The team handles it internally and only escalates after 3 failed attempts
+- **Auto-checkpoint** — context saves at every major milestone automatically. Sessions can crash and nothing is lost
 - **A context system** that reads your documents, emails, and notes — and never forgets what you told it
-- **Session-to-session memory** — the team picks up exactly where you left off, every time
 - **The PAUL method** baked into the workflow — Plan, Act, Update, Learn — a continuous improvement cycle that runs on every build
 
 ## What makes this different
 
 This isn't a prompt template or a chatbot wrapper. It's a complete engineering operation with the same quality controls used by professional software teams:
 
-- **Nothing ships without review.** Code gets debated, security-checked, and tested before it goes anywhere.
-- **Nothing gets forgotten.** Action items, decisions, and context persist across sessions. Come back in a week — the team knows exactly where you left off.
+- **Nothing ships without proof.** Every verification claim has actual command output attached. The team doesn't say "tests pass" — it shows you the test output.
+- **Nothing ships without review.** Code gets debated, security-checked, and tested before it goes anywhere. The QA chain runs 7 named checks and verifies every acceptance criterion from the plan.
+- **Nothing gets forgotten.** Action items, decisions, and context persist across sessions. Auto-checkpointing means even crashed sessions don't lose progress.
 - **Nothing gets built without your approval.** The team shows you the plan and waits. You're always in control.
+- **The team fixes its own mistakes.** When something breaks, the right specialist gets routed in automatically. You experience a smooth pipeline, not a series of error reports.
 
 I use this to deliver production software to paying clients. The same guardrails protecting my builds now protect yours.
 
@@ -65,14 +70,14 @@ Each cycle through the pipeline makes the project more robust and makes you more
 
 ## The build pipeline (detailed)
 
-Every build session follows this flow. Each step checks the work before passing it forward.
+Every build session follows this flow. The team handles failures internally and only pulls you in when it needs a human decision.
 
 ```
   START HERE
       |
       v
   /status ............... "Where are we? What's next?"
-      |
+      |                   (auto-detects tech stack on first contact)
       v
   /inbox ................ "Any new documents or notes to process?"
       |
@@ -84,19 +89,26 @@ Every build session follows this flow. Each step checks the work before passing 
       |                              ┐
       v                              │
   YOU APPROVE THE PLAN               │  P - PLAN
-      |                              │
+      |         (auto-checkpoint)    │
       v                              ┘
   [BUILD] ............... Tests first, then code.        ┐
       |                                                   │
       v                                                   │
-  /devils-advocate ...... "Two engineers argue about it"  │  A - ACT
-      |                                                   │
+  VERIFY LOOP .......... build → verify → fix → verify   │  A - ACT
+      |                  (loops until all 7 checks pass   │
+      |                   with actual evidence)            │
       v                                                   │
-  /review ............... "Security + quality checklist"  │
-      |                                                   │
-      v                                                   │
-  /verify ............... "Run tests + check everything"  ┘
+  QA CHAIN (auto) ...... Self-healing: finds issues,     │
+      |                  fixes them, re-verifies.          │
+      |                  Up to 3 cycles before asking you. │
+      |                  7-check protocol + acceptance     │
+      |                  criteria from the plan.           │
+      v                                                   ┘
+  HUMAN CHECK .......... "Verify these 3-5 specific things"
       |
+      v
+  SHIP / HOLD           (SHIP only with evidence + your OK)
+      |         (auto-checkpoint)
       v
   /update ............... "Save everything for next time"    U - UPDATE
       |
@@ -106,6 +118,14 @@ Every build session follows this flow. Each step checks the work before passing 
       v
     DONE
 ```
+
+**What runs automatically (you don't trigger these):**
+- Tech stack detection on first contact
+- Model routing (cheaper models for simple tasks)
+- Auto-recovery when builds/tests fail
+- Auto-checkpointing at every milestone
+- Progress narration ("Max finished tests. Nina is reviewing.")
+- Evidence collection on every verification claim
 
 ---
 
