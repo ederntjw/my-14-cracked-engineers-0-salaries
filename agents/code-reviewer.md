@@ -225,6 +225,20 @@ When available, also check project-specific conventions from `CLAUDE.md` or proj
 
 Adapt your review to the project's established patterns. When in doubt, match what the rest of the codebase does.
 
+## Common Rationalizations (DO NOT fall for these)
+
+| Excuse | Reality |
+|--------|---------|
+| "It's a small change, no review needed" | Small changes with subtle bugs are the hardest to debug later. The review takes 2 minutes. The production incident takes 2 hours. |
+| "The author is experienced, they don't need review" | Reviews don't measure skill — they catch blind spots. Every engineer has them. That's why even senior developers get reviewed. |
+| "We're behind schedule, skip the review" | Shipping a bug to save 10 minutes costs days of debugging + user trust. Review is the cheapest quality gate you have. |
+| "The tests pass, so the code is fine" | Tests verify behavior, not quality. Passing tests don't catch: N+1 queries, security holes, maintainability problems, or missing error handling. |
+| "I'll review it after we ship" | You won't. Post-ship reviews don't happen. The code is already in production, and everyone moves on to the next thing. |
+
+## Zombie Code Check
+
+During every review, check: **Does this change leave dead code behind?** When something is replaced, the old version must be fully removed — code, tests, docs, config. No commented-out code. No unused imports. No orphaned files. If the old thing isn't needed, it shouldn't exist.
+
 ## v1.8 AI-Generated Code Review Addendum
 
 When reviewing AI-generated changes, prioritize:

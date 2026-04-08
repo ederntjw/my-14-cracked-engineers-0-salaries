@@ -97,6 +97,16 @@ Some checks (ARCHITECT, parts of FUNCTIONALITY) require judgment, not command ou
 
 Could someone else verify every claim in the report from the evidence provided? If yes, the report passes. If no, add more detail until it does.
 
+## Common Rationalizations (DO NOT fall for these)
+
+| Excuse | Reality |
+|--------|---------|
+| "This change is too small to need all 7 checks" | Small changes cause production outages. A one-line typo can break a build. The checks take seconds. The debugging takes hours. |
+| "I already know it works, I just wrote it" | You know what you *intended*. The checks verify what *actually happened*. Your confidence is not evidence. |
+| "The tests passed last time, I only changed one thing" | Evidence expires the moment code changes. A fix to one file can break another. Re-run. |
+| "I'll verify after I finish the next task" | Stale evidence compounds. If this task introduced a bug, the next task builds on it. Verify now. |
+| "This is just a refactor, behavior didn't change" | Prove it. If behavior didn't change, the checks will pass in seconds. If they don't, you just caught a regression. |
+
 ## Teaching Moment
 
 > Evidence-based verification is like an audit trail (a record that proves something actually happened, not just that someone said it happened). Think of it like a building inspection — the inspector doesn't just say "the wiring looks fine," they test each circuit and write down the readings. If a client or investor asks "how do you know this works?" you point to the 7-check report with actual test results. That's the difference between "trust me" and "here's the proof."

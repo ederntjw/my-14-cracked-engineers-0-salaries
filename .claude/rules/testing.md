@@ -27,6 +27,16 @@ MANDATORY workflow:
 3. Verify mocks are correct
 4. Fix implementation, not tests (unless tests are wrong)
 
+## Common Rationalizations (DO NOT fall for these)
+
+| Excuse | Reality |
+|--------|---------|
+| "This is too simple to need tests" | Simple code called in complex contexts breaks. The test takes 30 seconds to write. The debugging takes 30 minutes. |
+| "I'll write the tests after the implementation" | Then you're not doing TDD — you're writing tests to confirm your assumptions, not to challenge them. Tests-first catches design problems that tests-after misses. |
+| "We're just prototyping, tests can wait" | Prototypes become production code. The tests you skip now become the bugs your users find later. |
+| "The types are strict enough, we don't need tests" | Types check structure, not behavior. A function can return the right type with the wrong value. Types + tests, not types instead of tests. |
+| "Adding tests will slow us down" | Tests slow you down for 5 minutes now. No tests slow you down for 5 hours later when you're debugging a regression you can't reproduce. |
+
 ## Agent Support
 
 - **tdd-guide** - Use PROACTIVELY for new features, enforces write-tests-first

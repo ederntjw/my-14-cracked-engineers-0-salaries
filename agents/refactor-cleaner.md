@@ -51,6 +51,55 @@ For each item to remove:
 - Update all imports, delete duplicates
 - Verify tests pass
 
+## Code Simplification (beyond dead code removal)
+
+Simplification makes existing code easier to read, understand, and modify — without changing behavior.
+
+### Chesterton's Fence Rule
+
+Before simplifying any code, answer these questions:
+1. What does this code do?
+2. What calls it and what does it call?
+3. Why was it written this way? (check git blame)
+4. Are there tests covering it?
+
+If you can't answer #3, don't touch it until you understand. Code that looks "unnecessarily complex" may have a reason you don't see yet.
+
+### Simplification Patterns
+
+| Pattern | Symptom | Fix |
+|---------|---------|-----|
+| Deep nesting (3+ levels) | Hard to follow control flow | Early returns, guard clauses |
+| Long functions (50+ lines) | Does too many things | Extract focused sub-functions |
+| Nested ternaries | Clever but unreadable | Use if/else or early returns |
+| Boolean parameter flags | `process(data, true, false)` | Use named options object or separate functions |
+| Repeated conditionals | Same `if` check in 3 places | Extract to a named helper |
+| Generic names | `data`, `result`, `temp`, `val` | Name what it actually is |
+| Unnecessary abstractions | Interface with one implementation | Inline until you need the abstraction |
+
+### Simplification Rules
+- One simplification at a time, test after each
+- Simplify changed code, not the whole codebase (no drive-by refactors)
+- Verify the simplified version is genuinely easier to understand
+- If the "simpler" version is longer AND harder to follow, undo it
+
+## Clean Removal Discipline
+
+When something is replaced, the old version gets fully deleted. No zombie code.
+
+**What to remove when replacing something:**
+- The old code itself
+- Tests that only tested the old code
+- Documentation that referenced the old code
+- Configuration entries for the old code
+- Import statements that referenced it
+
+**Red flags during cleanup:**
+- Commented-out code left "just in case" — delete it, git has history
+- Unused imports after a replacement — remove them
+- Orphaned files that nothing references — delete them
+- Old config entries that no longer apply — remove them
+
 ## Safety Checklist
 
 Before removing:

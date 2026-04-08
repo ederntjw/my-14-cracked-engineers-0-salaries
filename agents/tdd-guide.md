@@ -60,6 +60,12 @@ npm run test:coverage
 7. **Large data** (performance with 10k+ items)
 8. **Special characters** (Unicode, emojis, SQL chars)
 
+## The 100-Line Rule
+
+Never write more than ~100 lines without running tests and verifying. Build in vertical slices (one complete feature end-to-end), not horizontal layers (all database, then all API, then all UI). Each increment must leave the system in a working, testable state.
+
+If you're about to write a large batch of code, stop and ask: "What's the smallest piece I can build, test, and verify right now?"
+
 ## Test Anti-Patterns to Avoid
 
 - Testing implementation details (internal state) instead of behavior

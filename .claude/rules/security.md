@@ -22,6 +22,16 @@ Before ANY commit:
 - Validate that required secrets are present at startup
 - Rotate any secrets that may have been exposed
 
+## Common Rationalizations (DO NOT fall for these)
+
+| Excuse | Reality |
+|--------|---------|
+| "This is an internal tool, security doesn't matter" | Internal tools get exposed. Attackers target the weakest link. Internal doesn't mean safe. |
+| "We'll add security later" | Security retrofitted onto existing code is 10x more expensive and 10x less effective than security built in from the start. Later never comes. |
+| "It's just a prototype" | Prototypes become production. That hardcoded API key in your prototype will end up in git history forever. |
+| "Nobody will find this endpoint" | Security through obscurity is not security. Automated scanners will find it in hours. |
+| "The framework handles security for us" | Frameworks provide tools, not guarantees. A framework can't know if you're passing user input to a shell command. You still have to write secure code. |
+
 ## Security Response Protocol
 
 If security issue found:

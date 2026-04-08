@@ -1,33 +1,24 @@
 # Start Here
 
-You just downloaded your engineering team. This guide explains what you have, how to start, and how things work. Read it once; after that, everything is conversational.
+You just got a 14-person engineering team. This guide explains what you have and how to use it. Read it once. After that, just talk — the team handles the rest.
 
 ---
 
 ## What is this?
 
-Think of this folder like hiring a 14-person engineering team that lives inside your computer. Instead of one AI assistant that does everything okay, you get specialists:
+Think of this folder like hiring a full engineering team that lives inside your computer. You have specialists: strategists, planners, architects, builders, testers, security experts, and more.
 
-- **Maya** (strategist) translates your business idea into a technical plan
-- **Jake** (planner) breaks work into steps with checklists
-- **Sara** (architect) designs how the pieces fit together
-- **Max** (test engineer) writes tests first, every time
-- **Liam** (frontend) builds the interfaces you and your users see
-- **Elena** (security) checks for vulnerabilities before anything ships
-- **Nina** (code reviewer) catches bugs and bad patterns
-- **Aisha** (QA) runs end-to-end browser tests
-- **Tom** (DevOps) fixes builds when they break
-- Plus **Yuki** (refactoring), **Rachel** (docs), **Andre** (database), **Fatima** (data), and **Dave** (auditing)
+You don't manage them. You don't give them technical instructions. You don't need to know any programming language, design tool, or engineering process.
 
-You never have to call them by name. Describe what you want, and the right person activates. See `docs/TEAM.md` for the full org chart.
+**You talk. They build.**
 
-**The key difference from regular AI coding:** This team has guardrails. Code gets planned before it's built. It gets reviewed after it's built. Tests prove it works. Security gets checked. Nothing ships without passing through multiple quality gates. This is how professional software teams operate — except these specialists work 24/7 and never forget context.
+The team plans before building, tests everything, reviews its own code, checks security, and proves things work with actual evidence — not just "it should work." If something breaks, they fix it themselves. If they need your input, they ask one clear question.
 
 ---
 
 ## How to start
 
-### Step 1: Open the folder in Claude Code
+### Step 1: Open the folder
 
 If using the terminal:
 ```
@@ -37,233 +28,125 @@ claude
 
 If using VS Code or Cursor: open this folder, then open the Claude Code panel.
 
-### Step 2: Send any message
+### Step 2: Say hello
 
-That's it. The team detects it's a new project and starts onboarding automatically. It'll ask:
+That's it. Type anything. "Hey" works. The team detects it's a new project and walks you through setup — name, what you're building, who's involved. Takes about 2 minutes.
 
-1. **Are you building something new?** — The team plans from scratch.
-2. **Do you have existing code?** — The team reads your code, runs a health check, and tells you what's good, what's broken, and what to fix first.
+After that, you're building.
 
-The setup takes about 2 minutes. After that, you're building.
+---
+
+## How to talk to the team
+
+Just say what you want in plain English. Here are real examples:
+
+| What you say | What happens |
+|-------------|-------------|
+| "I want to build a marketplace for local services" | Maya (strategy) helps you sharpen the idea. What's version 1? What's NOT in version 1? Then Jake (planner) breaks it into steps. |
+| "Build me a landing page" | Liam (frontend) designs and builds it. |
+| "This is broken" + paste an error | Tom (DevOps) diagnoses it using a structured process and fixes it. |
+| "Is this ready to ship?" | The team runs a full pre-launch checklist — security, performance, tests, everything. |
+| "I had a call with my investor, they want X by Friday" | The team adjusts priorities. Maya captures the context. Jake replans if needed. |
+| "Check out this GitHub repo, can we learn from it?" | Maya reads it and walks you through what's worth adopting. |
+| "Clean this up" | Yuki simplifies the code — understands it first, then makes it cleaner. |
+| "What just happened?" | Whoever just worked explains what they did in plain English. |
+
+**You never need to type a command.** The team figures out what's needed based on what you say.
+
+---
+
+## What the team does automatically
+
+You don't need to ask for any of this. It just happens:
+
+- **Detects your tech stack** — figures out what languages, frameworks, and tools the project uses
+- **Sharpens vague ideas** — if you say something broad like "I want a dashboard," Maya helps you define exactly what version 1 looks like before anyone writes code
+- **Plans before building** — Jake and Sara break work into steps with checklists. Nothing gets built until you approve the plan.
+- **Tests everything** — Max writes tests first, then builds the feature. This proves things work, not just that they look right.
+- **Reviews its own code** — Nina checks every change for bugs, security issues, and quality problems
+- **Checks security** — Elena scans for vulnerabilities before anything ships
+- **Self-heals** — when something breaks, the team fixes it internally (up to 3 attempts) before asking you
+- **Proves things work** — every claim ("tests pass," "build succeeds") comes with actual output as evidence
+- **Catches itself taking shortcuts** — every critical workflow has built-in checks that prevent the team from skipping steps
+- **Documents decisions** — architectural choices get recorded so no one has to re-explain why something was built a certain way
+- **Saves progress** — the team checkpoints automatically so the next session picks up exactly where this one left off
 
 ---
 
 ## The two types of sessions
 
-Every time you open Claude Code, you're in one of two modes:
+**Thinking sessions** — explore ideas, make decisions, brainstorm. No code gets written. At the end, the team saves your decisions so they can be loaded into a build session later.
 
-```
- ┌─────────────────────────────────────────────────────────┐
- │                                                         │
- │   BRAINSTORM SESSION          BUILD SESSION             │
- │   ==================          =============             │
- │                                                         │
- │   Think, explore, decide.     Execute. Write code.      │
- │   No rules. Talk freely.      Follow the workflow.      │
- │                                                         │
- │   End with:                   End with:                 │
- │   /wrap [topic]               /update                   │
- │                                                         │
- │   Your decisions get saved    Your code gets saved       │
- │   as a handoff file.          to the project.           │
- │           |                          ^                   │
- │           |     /pull loads it       |                   │
- │           └──────────────────────────┘                   │
- │                                                         │
- └─────────────────────────────────────────────────────────┘
-```
+**Build sessions** — execute. The team follows a pipeline: plan, build, test, review, verify. You approve the plan, they build it, and they prove it works.
 
-**Brainstorm** = thinking. **Build** = doing. Keep them separate. The `/wrap` and `/pull` system bridges them so nothing gets lost.
+You don't need to tell the team which type of session you're in. They figure it out based on what you say.
 
 ---
 
-## The build workflow (visual)
+## Giving the team context
 
-When you're in a build session, the work moves through a pipeline. Each step checks the work before passing it to the next one. Think of it like a factory assembly line — each station has a specific job.
+You don't need to write formal documents. Talk naturally:
 
-```
- ┌──────────────────────────────────────────────────────────────────┐
- │                    THE BUILD PIPELINE                            │
- │                                                                  │
- │  /status ──> /inbox ──> /pull ──> /plan ──> BUILD               │
- │     |           |          |         |        |                  │
- │  "Where      "Any new    "Load    "Break    Tests               │
- │   are we?"   docs?"     brainstorm work    first,               │
- │                          notes"   into     then                  │
- │                                  steps"    code                  │
- │                                    |        |                    │
- │                              YOU APPROVE    |                    │
- │                              THE PLAN       |                    │
- │                                             v                    │
- │  /update <── /verify <── /review <── /devils-advocate           │
- │     |           |           |              |                     │
- │  "Save       "Run tests  "Security     "Two engineers           │
- │   everything  + check     + quality      argue about             │
- │   for next    every       checklist"     the code"               │
- │   time"       requirement"                                       │
- │                  |                                                │
- │            PASS / FAIL                                           │
- │                                                                  │
- └──────────────────────────────────────────────────────────────────┘
-```
+- "My partner said we should focus on mobile first."
+- "Here's an email from the client — they want login by next week."
+- "I saw a competitor that does X, I want something like that but simpler."
 
-**You don't need to memorize this.** The team knows the order. Just follow along. But here's what each step does:
-
-| Step | Command | What it does (in plain English) |
-|------|---------|-------------------------------|
-| 1 | `/status` | Checks in. "Where are we? What was the last thing we worked on? What's next?" |
-| 2 | `/inbox` | Reads any new documents you dropped in the inbox folder. Briefs you on what's new. |
-| 3 | `/pull` | Loads decisions from a brainstorm session (if you had one). |
-| 4 | `/plan` | Breaks the work into tasks with checklists. Shows you the plan. **Nothing gets built until you say "go."** |
-| 5 | Build | The team writes tests first (to prove things work), then writes the code. Automatic. |
-| 6 | `/devils-advocate` | Two engineers argue about the code. One defends it, one attacks it. Finds problems before testing. |
-| 7 | `/review` | Security and quality checklist. Gets a verdict: APPROVE, WARNING, or BLOCK. |
-| 8 | `/verify` | Runs all tests and checks every requirement from the plan. Verdict: PASS, PARTIAL, or FAIL. |
-| 9 | `/update` | Saves everything — decisions, progress, context — so the next session picks up right where this one ended. |
-
----
-
-## When to use which command (decision tree)
-
-Not sure what to do? Start here:
-
-```
-  What do you need?
-       |
-       ├── "I just opened a new session"
-       │        └── /status  (always start here)
-       │
-       ├── "I have new documents / files / notes"
-       │        └── Drop them in context/inbox/, then /inbox
-       │
-       ├── "I brainstormed last time, now I want to build"
-       │        └── /pull  (loads your brainstorm decisions)
-       │
-       ├── "I want to build a new feature"
-       │        └── /plan  (breaks it into steps)
-       │
-       ├── "The code is done, is it any good?"
-       │        └── /devils-advocate  then  /review
-       │
-       ├── "Do the tests pass?"
-       │        └── /verify  (runs tests + checks requirements)
-       │
-       ├── "I'm done for today"
-       │        └── /update  (saves everything, never skip this)
-       │
-       ├── "I was just thinking out loud, save my decisions"
-       │        └── /wrap [topic]  (saves brainstorm as handoff)
-       │
-       ├── "The build is broken / there are errors"
-       │        └── Just paste the error or say "the build is failing"
-       │
-       ├── "Is the codebase healthy?"
-       │        └── /audit  (full health check)
-       │
-       ├── "Explain what you just did"
-       │        └── /explain  (plain English breakdown)
-       │
-       └── "I want to ship this"
-                └── /deploy  (pre-flight checklist)
-```
-
----
-
-## The context system (your project's memory)
-
-Everything your team knows lives in the `context/` folder. Think of it as a filing cabinet:
-
-```
-  context/
-     |
-     ├── STATUS.md ............ The dashboard. "Where are we right now?"
-     ├── ACTION-ITEMS.md ...... The to-do list. Every task, tracked.
-     ├── inbox/ ............... Drop zone. Put new files here.
-     │
-     ├── sessions/ ............ Brainstorm handoffs (from /wrap)
-     ├── builds/ .............. Build records (plans + results)
-     ├── decisions/ ........... Why we chose what we chose
-     ├── requirements/ ........ What needs to be built
-     ├── communications/ ...... Emails, meeting notes, call summaries
-     └── archive/ ............. Old documents (read once, kept forever)
-```
-
-**How to use it:**
-- **Got a PDF, email, or spec?** Drop it in `context/inbox/` and say "check the inbox."
-- **Want to know where things stand?** The team reads `STATUS.md` automatically at the start of every session.
-- **Wondering why something was built a certain way?** Check `context/decisions/`.
-
-You don't need to organize anything yourself. The team reads, files, and cross-references everything.
-
----
-
-## Giving the team context (it's just talking)
-
-You don't need to write formal specs. Talk naturally:
-
-- "I had lunch with my partner today and he said we should prioritize the mobile view."
-- "Here's an email thread from the client — they want SSO by April."
-- "We should also fix that bug where the dashboard takes forever to load."
-
-The team captures all of this. Verbal context gets saved to `context/communications/`. Action items get tracked in `ACTION-ITEMS.md`. Nothing gets lost.
+The team captures everything. If you have files (PDFs, emails, screenshots, specs), drop them in the `context/inbox/` folder and say "check the inbox." The team reads them, briefs you, and files them.
 
 ---
 
 ## For an existing codebase
 
-If you already have code (from VibeCoding, another tool, or a developer):
+If you already have code (from another AI tool, a developer, or yourself):
 
-1. Run setup (happens automatically on first message)
-2. Tell the team where the code is
-3. The team runs `/audit` — a full health check that tells you:
-   - What's working
-   - What's broken
-   - Security issues
-   - What to fix first
-4. Drop any existing documents into `context/inbox/`
+1. Open the folder and say hello
+2. Tell the team you have existing code
+3. The team reads everything, runs a health check, and gives you a clear report: what works, what's broken, what to fix first
+4. Drop any documents into `context/inbox/`
 5. Start building from there
 
 The team doesn't judge how the code was written. It reads it, understands it, and helps you make it production-ready.
 
 ---
 
-## Commands at a glance
+## How to know things are working
 
-### Every session
-| Command | When | What it does |
-|---------|------|-------------|
-| `/status` | Start of every session | Checks in, shows where things stand |
-| `/update` | End of every session | Saves everything for next time |
+The team shows you proof, not promises. After every build:
 
-### Building
-| Command | When | What it does |
-|---------|------|-------------|
-| `/plan` | Before building anything | Breaks work into steps, waits for your OK |
-| `/devils-advocate` | After code is written | Two engineers debate the code |
-| `/review` | After debate | Security and quality checklist |
-| `/verify` | Final check | Runs tests and verifies requirements |
+- **Test results** — "14 passing, 0 failing" with actual output
+- **Build status** — "Build succeeded" with actual output
+- **Security check** — "No vulnerabilities found" with actual scan results
+- **Quality review** — specific findings with severity levels
+- **Acceptance criteria** — each requirement checked off with evidence
 
-### Context
-| Command | When | What it does |
-|---------|------|-------------|
-| `/inbox` | When you have new documents | Reads, briefs you, files everything |
-| `/wrap [topic]` | End of a brainstorm | Saves decisions as a handoff |
-| `/pull` | Start of a build | Loads brainstorm decisions |
-
-### Occasional
-| Command | When | What it does |
-|---------|------|-------------|
-| `/audit` | Health checks | Full codebase review |
-| `/deploy` | Ready to ship | Pre-flight checklist |
-| `/milestone` | Progress reports | Formal milestone summary |
-| `/explain` | Confused | Plain English breakdown of what happened |
+If something fails, the team explains what went wrong, fixes it, and re-verifies. You see the whole process.
 
 ---
 
 ## Tips
 
-1. **You don't need to memorize commands.** Just describe what you want. The team figures out which command to run.
-2. **Always end with `/update`.** Skip it and the next session starts cold. It's like saving your game.
-3. **Keep brainstorming and building separate.** Think in one session, build in another. The `/wrap` and `/pull` system connects them.
-4. **Drop files, don't explain them.** Put a client email in the inbox and say "check the inbox." The team reads it and briefs you.
-5. **Nothing ships without your approval.** The team shows you the plan and waits. You're always in control.
+1. **Just talk.** Don't try to give technical instructions. Describe what you want your users to experience, and the team translates that into code.
+2. **Start small.** "I want a simple page that shows X" is better than "I want a full platform with 20 features." The team will help you scope it down if needed.
+3. **Drop files, don't explain them.** Put a client email in the inbox and say "check the inbox." The team reads it and briefs you.
+4. **Nothing ships without your approval.** The team shows you the plan and waits. You're always in control.
+5. **Don't worry about "doing it wrong."** There's no wrong way to talk to the team. If something is unclear, they ask.
+6. **If something looks off, say so.** "That doesn't look right" or "I expected something different" is enough. The team investigates.
+
+---
+
+## What makes this different from regular AI coding
+
+Most AI coding tools generate code when you ask. This team operates like a real engineering organization:
+
+- **Planning before building** — so you don't build the wrong thing
+- **Tests before code** — so bugs get caught during development, not after launch
+- **Code review** — so quality issues get fixed before they become problems
+- **Security review** — so vulnerabilities get caught before your users are at risk
+- **Evidence-based verification** — so "it works" means "here's proof it works"
+- **Self-healing** — so you don't have to debug errors yourself
+- **Structured debugging** — so bugs get fixed at the root cause, not patched over
+- **Scope discipline** — so your project doesn't balloon into something unfinishable
+- **Clean removal** — so replaced code gets fully deleted, not left as dead weight
+- **Progress saving** — so every session picks up exactly where the last one left off
+
+The result: production-grade software built as if your livelihood, income, and reputation depend on it. Because for many founders, they do.

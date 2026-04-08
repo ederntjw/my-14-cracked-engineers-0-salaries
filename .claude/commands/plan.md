@@ -23,6 +23,13 @@ This command activates **Jake** (lead planner) and **Sara** (lead architect).
 ### What We're Building
 One paragraph explaining the feature/task in plain English.
 
+### Assumptions
+List every assumption the team is making. If any of these are wrong, the plan changes.
+- We're assuming [X]. If that's wrong, [what changes].
+- We're assuming [X]. If that's wrong, [what changes].
+
+If a `/refine` scope document exists in `context/decisions/`, pull assumptions from there.
+
 ### Wave Map
 
 Group all tasks into waves. Show the dependency between waves.
@@ -67,12 +74,19 @@ Wave 3: [Integration/polish] — depends on Wave 1 + Wave 2
 
 ...and so on for each wave.
 
-### Boundaries (DO NOT CHANGE)
-Explicit list of what must not be touched during this build:
-- Files that are off-limits
-- Behaviours that must not change
-- Assumptions that must not be made
-- Any constraints from a /pull handoff
+### Boundaries (3-tier)
+
+**ALWAYS DO** (non-negotiable, every task):
+- [Things that must happen in every task — e.g., "run tests after every change", "validate inputs on all new endpoints"]
+
+**ASK FIRST** (need user approval before proceeding):
+- [Things that require a judgment call — e.g., "changing the database schema", "modifying existing API contracts", "removing existing features"]
+
+**NEVER DO** (hard constraints, off-limits):
+- [Files that must not be touched]
+- [Behaviors that must not change]
+- [Patterns that must not be introduced]
+- [Any constraints from a /pull handoff or /refine scope doc]
 
 ### Risks
 - What could go wrong
@@ -126,8 +140,10 @@ total_waves: [number]
 | 2 | [Feature group] | Task 6, Task 7 | Wave 0 | not-started |
 | 3 | [Integration] | Task 8 | Wave 1, Wave 2 | not-started |
 
-## Boundaries (DO NOT CHANGE)
-- [explicit list — applies to ALL waves]
+## Boundaries (3-tier — applies to ALL waves)
+**ALWAYS DO:** [non-negotiable standards]
+**ASK FIRST:** [decisions needing user approval]
+**NEVER DO:** [hard constraints, off-limits]
 
 ## Risks
 - [what could go wrong]
@@ -164,8 +180,10 @@ Written so that a fresh agent can read this file cold and know exactly what to d
 ### Task 2: [name]
 [same structure]
 
-## Boundaries (DO NOT CHANGE)
-- [from master plan — repeated here so a fresh session has them]
+## Boundaries (3-tier — from master plan, repeated here)
+**ALWAYS DO:** [non-negotiable standards]
+**ASK FIRST:** [decisions needing user approval]
+**NEVER DO:** [hard constraints, off-limits]
 
 ## Files Touched in This Wave
 [Complete list of every file that will be created or modified — the agent should load all of these at the start of the build]

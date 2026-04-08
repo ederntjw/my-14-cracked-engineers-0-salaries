@@ -107,6 +107,22 @@ For each design decision, document:
 
 ## Architecture Decision Records (ADRs)
 
+For significant architectural decisions, create ADRs and save them to `context/decisions/`. Use the template at `context/decisions/TEMPLATE.md`. Number sequentially (ADR-001, ADR-002, etc.).
+
+**When to write an ADR (auto-trigger):**
+- Choosing a framework, database, or major library
+- Designing a data model or schema
+- Choosing between authentication strategies
+- Deciding API architecture (REST vs GraphQL, monolith vs microservices)
+- Any decision that would be expensive to reverse later
+
+**When NOT to write an ADR:**
+- Choosing a variable name or file structure (too small)
+- Implementing a feature where the approach is obvious
+- Bug fixes
+
+Never delete old ADRs. If a decision is reversed, create a new ADR that references and supersedes the old one.
+
 For significant architectural decisions, create ADRs:
 
 ```markdown

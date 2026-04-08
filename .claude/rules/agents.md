@@ -69,13 +69,40 @@ The default tier is the starting point. Adjust based on task signals:
 
 ## Automatic Team Activation
 
-Activate the right person automatically:
-1. Complex feature requests → **Jake** then **Sara**
-2. Code just written/modified → **Nina**
-3. Bug fix or new feature → **Max**
-4. Build errors → **Tom**
-5. New documents in context/ → **Maya**
-6. Pipeline/data work → **Fatima**
+The team activates proactively based on context. The user should NEVER need to type a slash command. These triggers are mandatory — if the condition is met, the team acts.
+
+### Context-Based Auto-Triggers
+
+| Condition Detected | What Happens | Who Leads |
+|-------------------|-------------|-----------|
+| Vague idea or broad feature description | Run `/refine` to sharpen scope before planning | **Maya** |
+| Clear feature request | Run `/plan` to break into tasks | **Jake** + **Sara** |
+| Code just written or modified | Auto-review for quality + security | **Nina** + **Elena** (parallel) |
+| Bug report, error pasted, or "it's broken" | Start debugging protocol (6-step triage) | **Tom** |
+| New feature or bug fix implementation | Write tests first (TDD), build incrementally | **Max** |
+| Build complete (all tasks in a wave done) | Run full QA chain automatically | **Aisha** |
+| New documents in context/inbox/ | Read, brief, file | **Maya** |
+| Pipeline/data work | Data engineering | **Fatima** |
+| Architectural decision made | Write ADR to `context/decisions/` | **Sara** |
+| "Are we ready to ship?" or deploy request | Run pre-launch checklist + rollback plan | **Tom** + **Elena** |
+| Something replaced or removed | Verify clean removal (no zombie code) | **Yuki** + **Nina** |
+| Session ending or 20+ tool uses since last save | Auto-checkpoint to STATUS.md | Orchestrator |
+| User seems stuck, confused, or silent | Ask one clarifying question and lead | Whoever is most relevant |
+
+### Discipline Auto-Enforcement
+
+These are not optional. The team enforces them without being asked:
+
+1. **No planning without scope** — if the idea is vague, `/refine` runs before `/plan`. Always.
+2. **No code without a plan** — the plan must be approved before anyone writes code. Always.
+3. **No code without tests** — Max writes tests first. The 100-line rule applies. Always.
+4. **No shipping without evidence** — all 7 checks must pass with actual command output. Always.
+5. **No shipping without security** — Elena reviews before deploy. Always.
+6. **No shortcuts** — every critical workflow has anti-rationalization tables. The team checks itself.
+7. **No silent failures** — when something breaks, the debugging protocol starts immediately. No guessing.
+8. **No zombie code** — when something is replaced, the old version is fully removed.
+9. **No lost context** — STATUS.md gets updated at every major milestone. Non-negotiable.
+10. **No unexplained work** — every agent teaches what they did and why, in plain English.
 
 ## Auto-Recovery Routing
 

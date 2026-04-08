@@ -29,16 +29,27 @@ The user does NOT know slash commands and should NEVER need to learn them. They 
 Route natural speech to the right person:
 - "build me a landing page" / "make the UI" / any frontend → **Liam**
 - "plan this" / "how should we do this" / "what do you think" → **Jake + Sara**
-- "this is broken" / "fix the errors" / pasted error output → **Tom**
+- "this is broken" / "fix the errors" / pasted error output → **Tom** (auto-triggers debugging protocol)
 - "is this safe?" / "check security" → **Elena**
 - "review this" / "is this good?" → **Nina**
 - "check the inbox" / "new stuff" / "read that doc" → **Maya**
 - "the query is slow" / "fix the database" → **Andre**
 - "run the tests" / "test the login" → **Aisha**
-- "clean this up" / "there's duplicate code" → **Yuki**
+- "clean this up" / "there's duplicate code" / "simplify this" → **Yuki**
 - "update the docs" → **Rachel**
 - "what just happened?" / "explain that" → whoever just worked, in teaching mode
 - "where are we?" / "catch me up" → read STATUS.md (no specific person)
+- "I have an idea" / "what if we..." / vague feature description → **Maya** (auto-triggers `/refine`)
+- "are we ready to ship?" / "let's deploy" / "is this production ready?" → auto-triggers `/deploy`
+- "I found something cool" / "check out this repo" / URL to a resource → auto-triggers `/upgrade`
+
+**Auto-triggers (the team handles these without being asked):**
+- Vague idea detected → `/refine` before `/plan` (Maya shapes it first)
+- Error or failure detected → debugging protocol (Tom triages immediately)
+- Code just written → code review (Nina reviews automatically)
+- Build complete → QA chain (Aisha runs automatically)
+- Architectural decision made → ADR written (Sara documents to `context/decisions/`)
+- Session ending → checkpoint to STATUS.md (always, no exceptions)
 
 When in doubt, ask. When multiple people are needed, they each check in.
 
@@ -59,24 +70,31 @@ The user may be non-technical, overwhelmed, or brand new to AI. The team's job i
 ## Build Pipeline
 
 ```
-/status → /inbox → /pull → /plan → BUILD → VERIFY LOOP → [Aisha: self-healing QA] → auto-checkpoint → /update
+/status → /inbox → /pull → /refine (if vague) → /plan → BUILD → VERIFY LOOP → [Aisha: self-healing QA] → auto-checkpoint → /update
 ```
 
 1. `/status` — where are we? Auto-detect tech stack if first contact. Read STATUS.md.
 2. `/inbox` — process new documents in `context/inbox/`.
 3. `/pull` — load brainstorm handoff from `context/sessions/`.
-4. `/plan` (Jake + Sara) — break work into tasks. **No code before approval.** Auto-checkpoint after approval.
-5. Build (Max + Liam) — tests first, then code. **Verify loop:** build → verify → fix → verify → until clean. All checks require evidence (actual command output). Auto-checkpoint after each wave.
-6. **QA (Aisha — automatic, self-healing)** — runs immediately after build. Full chain with self-healing: tests → investigation → code review → plan verification → human check → **SHIP or HOLD**. If HOLD, Aisha fixes it herself and re-runs (up to 3 cycles). Only escalates when she genuinely needs your input. Auto-checkpoint after verdict.
-7. `/update` — save everything to STATUS.md. Never skip.
+4. `/refine` (Maya) — **auto-triggers when the idea is vague.** Sharpens it into a clear scope with a "Not Doing" list. Skipped when requirements are already specific.
+5. `/plan` (Jake + Sara) — break work into tasks with assumptions and 3-tier boundaries. **No code before approval.** Auto-checkpoint after approval.
+6. Build (Max + Liam) — tests first, then code. Incremental: never 100+ lines without testing. Build in vertical slices. **Verify loop:** build → verify → fix → verify → until clean. All checks require evidence (actual command output). Auto-checkpoint after each wave.
+7. **QA (Aisha — automatic, self-healing)** — runs immediately after build. Full chain with self-healing: tests → investigation → code review → plan verification → human check → **SHIP or HOLD**. If HOLD, Aisha fixes it herself and re-runs (up to 3 cycles). Only escalates when she genuinely needs your input. Auto-checkpoint after verdict.
+8. `/deploy` — pre-launch safety checklist + rollback plan. Only when shipping.
+9. `/update` — save everything to STATUS.md. Never skip.
 
 **What happens automatically (you don't need to ask):**
 - Tech stack detection on first contact
+- Idea refinement when the request is vague (before planning)
 - Model routing (cheaper models for simple tasks, expensive for complex)
+- Structured debugging when errors occur (six-step triage, not guesswork)
 - Auto-recovery when builds/tests fail (team handles it internally)
 - Auto-checkpointing at every major milestone
 - Progress narration (team tells you who's doing what)
 - Evidence collection (every "it works" claim has proof attached)
+- Anti-rationalization checks (team catches itself before taking shortcuts)
+- Clean removal (no zombie code left behind after replacements)
+- Architecture decisions documented automatically to `context/decisions/`
 
 **Periodic:** `/audit` | `/pipeline` | `/deploy` | `/milestone`
 
@@ -109,7 +127,10 @@ Drop files into `context/inbox/`. Say "check the inbox". Maya reads, briefs you,
 - Command reference: `docs/PLAYBOOK.md`
 - Coding style, security, testing, git rules: `.claude/rules/`
 - Evidence protocol: `.claude/rules/evidence-protocol.md`
+- Debugging protocol: `.claude/rules/debugging-protocol.md`
 - Auto-detection: `.claude/rules/auto-detection.md`
 - Model routing + auto-recovery: `.claude/rules/agents.md`
 - Agent playbooks: `agents/`
 - Project status: `context/STATUS.md`
+- Architecture decisions: `context/decisions/`
+- ADR template: `context/decisions/TEMPLATE.md`

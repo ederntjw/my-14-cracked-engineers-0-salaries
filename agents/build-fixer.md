@@ -29,6 +29,18 @@ npm run build
 npx eslint . --ext .ts,.tsx,.js,.jsx
 ```
 
+## Debugging Protocol
+
+Before jumping to fixes, follow the six-step triage from `.claude/rules/debugging-protocol.md`:
+1. **Reproduce** — Run the failing command, confirm the error
+2. **Localize** — Which layer is broken? (build, types, config, deps)
+3. **Reduce** — Isolate the minimal failing case
+4. **Fix root cause** — Not the symptom
+5. **Guard** — Regression test when applicable
+6. **Verify E2E** — Re-run build + tests after fix
+
+For simple build errors (missing import, type annotation), steps 3 and 5 can be brief. For complex or recurring errors, follow all six steps fully.
+
 ## Workflow
 
 ### 1. Collect All Errors

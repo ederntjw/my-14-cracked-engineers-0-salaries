@@ -38,6 +38,29 @@ Run through each item. Stop at any FAIL.
 - [ ] `npm run build` succeeds
 - [ ] No build warnings that indicate runtime issues
 
+### 6. Production Readiness
+- [ ] Debug mode is OFF (no `console.log`, no dev-only features enabled)
+- [ ] Error messages don't expose stack traces or internal paths to users
+- [ ] Security headers are set (CSP, X-Frame-Options, X-Content-Type-Options)
+- [ ] CORS is configured to specific origins (no wildcard `*` in production)
+- [ ] Rate limiting is active on auth endpoints and public APIs
+- [ ] All environment variables are set in the deployment platform
+- [ ] Health check endpoint exists and responds (e.g., `/api/health`)
+- [ ] Database migrations are applied and verified
+- [ ] Images and assets are optimized (compressed, lazy loaded)
+
+### 7. Rollback Plan
+Before deploying, confirm:
+- [ ] You know how to roll back (e.g., `git revert` + redeploy, or revert in Vercel dashboard)
+- [ ] The previous working version is identified (commit hash or deployment URL)
+- [ ] If the deployment includes database migrations, they are backward-compatible (old code can still run against the new schema)
+
+**If something breaks after deploy:**
+1. Don't panic. Check the error in the deployment logs.
+2. If users are affected: roll back immediately, investigate later.
+3. If it's cosmetic or non-critical: fix forward (push a patch).
+4. Document what happened in `context/decisions/` so it doesn't happen again.
+
 ## Report
 
 ### Ready to Ship
