@@ -1,7 +1,7 @@
 # SIMAH AI Search Control — Project Status
 
 **Last updated:** 2026-04-09
-**Updated by:** Engineering team (document upload + UX polish LIVE on Vercel)
+**Updated by:** Engineering team (post-deploy update — unpdf swap shipped, all gotchas captured)
 
 ---
 
