@@ -27,6 +27,11 @@ When you download this folder and open it in Claude Code, you get:
 - **Auto-recovery** — build fails? Tests break? The team handles it internally and only escalates after 3 failed attempts
 - **Auto-checkpoint** — context saves at every major milestone automatically. Sessions can crash and nothing is lost
 - **A context system** that reads your documents, emails, and notes — and never forgets what you told it
+- **Long-term memory (MemPalace)** — decisions, preferences, rejected approaches, and stakeholder constraints persist across sessions. The team remembers what you told it three months ago. No re-explaining.
+- **Codebase knowledge graph (Graphify)** — maps every module, relationship, and core abstraction in your codebase. New sessions understand the full architecture in seconds, not minutes. Auto-rebuilds on every commit.
+- **Graph-first navigation** — agents consult the knowledge graph before exploring files. No more blind grepping through unfamiliar code.
+- **Memory-informed decisions** — before making architectural choices, agents check institutional memory for prior decisions on the same topic. No repeating past mistakes.
+- **Crash recovery** — if a session dies unexpectedly, the next session automatically recovers unmined memories from the transcript. Nothing is lost.
 - **The PAUL method** baked into the workflow — Plan, Act, Update, Learn — a continuous improvement cycle that runs on every build
 
 ## What makes this different
@@ -35,7 +40,7 @@ This isn't a prompt template or a chatbot wrapper. It's a complete engineering o
 
 - **Nothing ships without proof.** Every verification claim has actual command output attached. The team doesn't say "tests pass" — it shows you the test output.
 - **Nothing ships without review.** Code gets debated, security-checked, and tested before it goes anywhere. The QA chain runs 7 named checks and verifies every acceptance criterion from the plan.
-- **Nothing gets forgotten.** Action items, decisions, and architecture choices persist across sessions. Auto-checkpointing means even crashed sessions don't lose progress.
+- **Nothing gets forgotten.** Action items, decisions, and architecture choices persist across sessions. Long-term memory (MemPalace) remembers your preferences, past failures, and stakeholder requirements across weeks and months. A codebase knowledge graph (Graphify) maps how everything connects. Auto-checkpointing means even crashed sessions don't lose progress.
 - **Nothing gets built without your approval.** The team shows you the plan and waits. You're always in control.
 - **The team fixes its own mistakes.** When something breaks, the right specialist gets routed in automatically with a structured debugging protocol. You experience a smooth pipeline, not a series of error reports.
 - **The team catches its own shortcuts.** Anti-rationalization tables are built into every critical workflow. If the team is about to skip testing, skip review, or skip verification, the tables call it out before it happens.
@@ -145,6 +150,9 @@ Every build session follows this flow. The team handles failures internally and 
 - Anti-rationalization checks (team catches itself before skipping steps)
 - Architecture decisions documented automatically
 - Clean removal of replaced code (no zombie code)
+- Graph rebuilt on every commit (Graphify AST, free, no LLM cost)
+- Conversation mined to long-term memory on session end (MemPalace)
+- Crash recovery — next session auto-recovers unmined memories
 
 ---
 
@@ -160,7 +168,15 @@ npm install -g @anthropic-ai/claude-code
 
 (Need npm? Install [Node.js](https://nodejs.org/) first — download the LTS version and run the installer.)
 
-### 2. Download and open
+### 2. Install long-term memory (optional, recommended)
+
+```
+pip install graphifyy[all] mempalace
+```
+
+This gives the team persistent memory across sessions and a map of your codebase. Without it, the team still works — it just starts fresh each session. With it, the team remembers everything and understands your architecture from the first second.
+
+### 3. Download and open
 
 Download this folder (or clone the repo), then open it in Claude Code:
 
@@ -171,7 +187,7 @@ claude
 
 Or open the folder in VS Code / Cursor with the Claude Code extension.
 
-### 3. Say hello
+### 4. Say hello
 
 That's it. Just send your first message. The team detects it's a fresh setup and walks you through onboarding automatically. It asks two questions:
 
