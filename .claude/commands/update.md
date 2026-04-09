@@ -11,11 +11,13 @@ This command invokes the `/update` skill in `.claude/skills/update/SKILL.md`. Fo
 In short:
 
 1. **Review the conversation** for decisions, new context, action items, knowledge growth
-2. **Update memory files** with anything new learned this session
-3. **Update STATUS.md** with current project state, progress, and what's next
-4. **Process inbox** if any unprocessed files remain
-5. **Log decisions** in context/decisions/ if significant decisions were made
-6. **Confirm to the user** — brief summary of what was saved and what's next
+2. **Update STATUS.md** with current project state, progress, and what's next
+3. **Update ACTION-ITEMS.md** with open/completed tasks
+4. **Log decisions** in context/decisions/ if significant decisions were made
+5. **Save to MemPalace** (if installed) — explicitly save key decisions, preferences, and discoveries from this session using `mempalace_add_drawer`. Focus on: architectural decisions, user preferences, rejected approaches, stakeholder constraints, and anything that would be valuable for a future session to know. Auto-mining catches general conversation; this explicit save captures the most important items with proper wing/room categorization.
+6. **Check Graphify** — if code was written this session, verify the graph was rebuilt (post-commit hook handles this automatically). If docs or architecture changed significantly, suggest a semantic re-extraction: `graphify $PROJECT_DIR --update`.
+7. **Process inbox** if any unprocessed files remain
+8. **Confirm to the user** — brief summary of what was saved and what's next
 
 ## When to Trigger Automatically
 

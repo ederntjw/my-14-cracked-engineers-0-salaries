@@ -33,7 +33,7 @@ npx eslint . --ext .ts,.tsx,.js,.jsx
 
 Before jumping to fixes, follow the six-step triage from `.claude/rules/debugging-protocol.md`:
 1. **Reproduce** — Run the failing command, confirm the error
-2. **Localize** — Which layer is broken? (build, types, config, deps)
+2. **Localize** — Which layer is broken? (build, types, config, deps). **Query Graphify** (`get_neighbors`) to see what the broken module connects to — the bug may originate upstream. **Query MemPalace** to check if this error has been seen before in a prior session.
 3. **Reduce** — Isolate the minimal failing case
 4. **Fix root cause** — Not the symptom
 5. **Guard** — Regression test when applicable

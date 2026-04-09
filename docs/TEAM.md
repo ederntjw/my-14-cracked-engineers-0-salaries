@@ -69,11 +69,20 @@ You always know who is working on what. If multiple people are needed (like Jake
 The build pipeline moves work through the team:
 
 1. **Maya** reads new context and sets direction
-2. **Jake** breaks it into tasks, **Sara** designs the architecture
+2. **Jake** breaks it into tasks, **Sara** designs the architecture — both query the knowledge graph (Graphify) for affected modules and institutional memory (MemPalace) for prior decisions
 3. **Max** writes tests, **Liam** builds the frontend, **Fatima** handles data pipelines
-4. **Nina** reviews the code, **Elena** checks security
-5. **Aisha** runs E2E tests, **Tom** fixes any build errors
+4. **Nina** reviews the code (using the graph for blast radius assessment), **Elena** checks security
+5. **Aisha** runs E2E tests, **Tom** fixes any build errors (using the graph to trace dependency chains and memory for similar past bugs)
 6. **Rachel** updates the docs, **Andre** optimizes the database
-7. **Dave** audits the whole thing when you need a health check
+7. **Dave** audits the whole thing when you need a health check — using the full knowledge graph as his primary navigation tool
 
 You don't manage them. Describe what you want and the right people show up.
+
+## Long-term memory
+
+The team has two systems that persist knowledge across sessions:
+
+- **MemPalace** — stores decisions, preferences, rejected approaches, stakeholder constraints, and institutional knowledge. Mined automatically from conversations. A new session knows what you told the team three months ago.
+- **Graphify** — maps the codebase structure: how modules connect, which are core abstractions, which areas are tightly coupled. Auto-rebuilds on every commit. A new session understands the architecture in seconds, not minutes.
+
+Both are optional (installed via `pip install graphifyy[all] mempalace`) but highly recommended for projects lasting more than a few sessions.

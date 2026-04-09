@@ -1,0 +1,35 @@
+# MemPalace project configuration
+# This file tells MemPalace how to organize memories for this project.
+# Wing and room names are auto-detected from conversation content,
+# but you can define defaults here to guide the organization.
+
+# Wing name for this project (one wing per project)
+# Replace with your project name during /setup
+wing: project
+
+# Default rooms — topics within this project
+# MemPalace auto-creates rooms from conversation content,
+# but these defaults ensure common categories exist from the start.
+rooms:
+  - architecture     # Tech stack decisions, system design, module structure
+  - decisions        # Why we chose X over Y, rejected approaches
+  - preferences      # User preferences for code style, workflow, tools
+  - stakeholders     # Investor requirements, partner constraints, deadlines
+  - bugs             # Past bugs, what caused them, how they were fixed
+  - features         # Feature discussions, scope decisions, what's in/out
+  - performance      # Optimization decisions, bottlenecks discovered
+  - security         # Security decisions, compliance requirements
+  - deployment       # Hosting, CI/CD, environment configuration
+  - data             # Database schema decisions, migration history, pipeline choices
+
+# Mining configuration
+mining:
+  # Auto-mine conversations on session end
+  auto_mine: true
+  # Categories to extract from conversations
+  extract:
+    - decisions       # "We decided to..." "Let's go with..."
+    - preferences     # "I prefer..." "Don't use..." "I hate..."
+    - discoveries     # "Found out that..." "Turns out..."
+    - problems        # "The bug was..." "It broke because..."
+    - milestones      # "Shipped..." "Completed..." "Launched..."

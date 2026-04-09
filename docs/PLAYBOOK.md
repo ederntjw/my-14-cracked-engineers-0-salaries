@@ -110,10 +110,14 @@ You don't trigger these — they happen on their own.
 
 | When | What happens |
 |------|-------------|
-| Session starts | Team loads STATUS.md, checks inbox, shows action items summary |
-| First-ever session | Auto-onboarding kicks in (setup flow) |
+| Session starts | Team loads STATUS.md + MemPalace memory + Graphify graph status. Checks inbox. Shows action items. Detects if last session crashed and recovers. |
+| First-ever session | Auto-onboarding kicks in (setup flow). Offers to install MemPalace + Graphify. |
 | Build completes | Reconciliation: did we build what the plan said? |
-| Session ends | Reminder to run `/update` if you haven't |
+| Git commit | Graphify AST auto-rebuilds (free). Micro-checkpoint to STATUS.md. |
+| Planning a feature | Team queries Graphify for affected modules + MemPalace for prior decisions. |
+| Session ends normally | Saves to STATUS.md + mines conversation to MemPalace. |
+| Session ends abnormally | Next session auto-recovers unmined memories. |
+| You say "save" / "pause" / "done" | Full `/update` runs — saves to all layers. |
 
 ---
 
@@ -152,9 +156,10 @@ Describe what you want. The right specialist activates. You don't name them.
 ## The rules
 
 1. **The team asks before building.** They show the plan and wait for your "go."
-2. **Always `/update` before closing.** Skip it and the next session starts from scratch. It's like saving your game.
+2. **Say "save" or "done" before closing.** The team saves everything — STATUS.md, action items, and long-term memory. If you forget, the auto-save hooks catch most of it, and the next session recovers the rest.
 3. **`/verify` includes running tests.** You don't need to run `/test` separately.
 4. **`/devils-advocate` comes before `/review`.** Structural problems first, checklist second.
 5. **`/audit` is for milestone moments.** It's heavy. Save it for health checks, not daily use.
 6. **Drop files, don't explain them.** Put them in `context/inbox/`, say "check the inbox." The team reads and briefs you.
 7. **Brainstorm and build are separate sessions.** Think in one, execute in another. `/wrap` and `/pull` connect them.
+8. **The team remembers.** Decisions, preferences, and context persist across sessions. You should never have to re-explain something you told the team before.

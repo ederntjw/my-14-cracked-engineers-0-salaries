@@ -40,6 +40,11 @@ Then present a brief in plain English:
 - Any files in context/sessions/ with `status: ready` (or omit this section if none)
 - If found: "You have a ready handoff from [date] — [topic]. Run /pull to load it into this session."
 
+### Memory & Graph Status
+- **MemPalace:** Installed/Not installed. If installed, report wing name, approximate memory count (from `mempalace_status`), and last mine timestamp.
+- **Graphify:** Graph exists/Not built. If exists, report node count, community count, last rebuild date, and top 3 god nodes.
+- If either tool is not installed, note it briefly. Don't nag — just state the fact.
+
 ### Team Notes
 - Any decisions or context changes since last session
 

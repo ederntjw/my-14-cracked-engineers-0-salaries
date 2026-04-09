@@ -115,6 +115,15 @@ A localized, KSA-compliant AI productivity tool for Qarar / SIMAH employees. Pro
 
 ---
 
+## Memory & Graph
+
+| System | Status | Details |
+|--------|--------|---------|
+| MemPalace | [Not configured / Active] | Wing: [wing name], Rooms: [count], Last mined: [date] |
+| Graphify | [Not built / Active] | Nodes: [count], Communities: [count], Last rebuilt: [date] |
+
+---
+
 ## Context Map
 
 ### Plan files

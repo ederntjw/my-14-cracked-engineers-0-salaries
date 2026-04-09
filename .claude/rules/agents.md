@@ -83,11 +83,15 @@ The team activates proactively based on context. The user should NEVER need to t
 | Build complete (all tasks in a wave done) | Run full QA chain automatically | **Aisha** |
 | New documents in context/inbox/ | Read, brief, file | **Maya** |
 | Pipeline/data work | Data engineering | **Fatima** |
-| Architectural decision made | Write ADR to `context/decisions/` | **Sara** |
+| Architectural decision made | Write ADR to `context/decisions/` + save to MemPalace | **Sara** |
 | "Are we ready to ship?" or deploy request | Run pre-launch checklist + rollback plan | **Tom** + **Elena** |
 | Something replaced or removed | Verify clean removal (no zombie code) | **Yuki** + **Nina** |
 | Session ending or 20+ tool uses since last save | Auto-checkpoint to STATUS.md | Orchestrator |
 | User seems stuck, confused, or silent | Ask one clarifying question and lead | Whoever is most relevant |
+| User says "save" / "pause" / "done for today" / "let's break" | Run `/update` (universal save to all layers) | Orchestrator |
+| Planning a feature that touches existing code | Query Graphify for affected modules and blast radius | **Jake** + **Sara** |
+| About to make an architectural decision | Query MemPalace for prior decisions on same topic | **Sara** |
+| Exploring unfamiliar code area | Read GRAPH_REPORT.md first, then targeted file reads | Any agent |
 
 ### Discipline Auto-Enforcement
 
@@ -103,6 +107,9 @@ These are not optional. The team enforces them without being asked:
 8. **No zombie code** — when something is replaced, the old version is fully removed.
 9. **No lost context** — STATUS.md gets updated at every major milestone. Non-negotiable.
 10. **No unexplained work** — every agent teaches what they did and why, in plain English.
+11. **No blind exploration** — if a knowledge graph exists, consult it before grepping through the codebase. Always.
+12. **No repeated mistakes** — before making architectural decisions, query MemPalace for prior decisions on the same topic. Always.
+13. **No late saves** — update STATUS.md BEFORE presenting completed work to the user (save-before-deliver). Always.
 
 ## Auto-Recovery Routing
 

@@ -11,8 +11,15 @@ description: "Hook system guidelines: lifecycle hooks, security hooks, session m
 
 ## Session Hooks (Installed)
 
-- **SessionStart** (`.claude/hooks/session-start.sh`): Auto-loads `context/STATUS.md` + last-session flags into every new conversation. The team picks up where it left off.
-- **Stop** (`.claude/hooks/session-stop.sh`): Saves session metadata when the session ends. Flags if STATUS.md was not updated (stale context warning for next session).
+- **SessionStart** (`.claude/hooks/session-start.sh`): Auto-loads `context/STATUS.md` + last-session flags + MemPalace status + Graphify graph status into every new conversation. Detects unclean previous session closes and flags for memory recovery. The team picks up where it left off with full institutional memory.
+- **Stop** (`.claude/hooks/session-stop.sh`): Saves session metadata when the session ends. Mines the conversation to MemPalace for cross-session memory persistence. Flags if STATUS.md was not updated (stale context warning for next session).
+- **PreToolUse** (Glob|Grep matcher in settings.json): Before any file search, checks if a Graphify knowledge graph exists and injects a reminder to consult GRAPH_REPORT.md first. Prevents blind codebase exploration.
+- **PostToolUse** (`.claude/hooks/post-tooluse-commit-detect.sh`): After `git commit` commands, triggers Graphify AST rebuild (free, no LLM cost) and reminds the agent to update STATUS.md via save-before-deliver pattern.
+
+## MCP Servers (Configured in .mcp.json)
+
+- **MemPalace**: Persistent cross-session memory. Stores decisions, preferences, discoveries, institutional knowledge. Tools: mempalace_search, mempalace_recall, mempalace_status, and 16 more. Runs locally, no API cost for core operations.
+- **Graphify**: Codebase knowledge graph. Maps module relationships, god nodes, communities. Tools: query_graph, get_node, get_neighbors, get_community, god_nodes, graph_stats, shortest_path. Runs locally from graph.json.
 
 ## Auto-Checkpoint (MANDATORY)
 

@@ -93,6 +93,34 @@ After getting answers, proceed to **Step 3: Write the project files** below.
 
 ---
 
+## Step 2b: Check dependencies
+
+Before writing project files, check if the memory and graph tools are installed:
+
+```bash
+python3 -c "import mempalace" 2>/dev/null && echo "MemPalace: installed" || echo "MemPalace: not installed"
+python3 -c "import graphify" 2>/dev/null && echo "Graphify: installed" || echo "Graphify: not installed"
+```
+
+If either is missing, tell the user:
+
+> "Quick thing — your team has two optional upgrades that make it much smarter over time:
+>
+> **MemPalace** remembers decisions and preferences across sessions (so you never re-explain things).
+> **Graphify** maps your codebase so the team understands how everything connects.
+>
+> Want me to install them? It's one command: `pip install graphifyy[all] mempalace`"
+
+If they say yes, run the install. If they say no or later, proceed — both tools are optional. The team works without them.
+
+If both are installed AND this is Path B (existing project), also offer to build the initial knowledge graph:
+
+> "Since you have existing code, I can build a map of how everything connects. Takes about a minute. Want me to run it?"
+
+If yes, run `graphify $PROJECT_DIR`.
+
+---
+
 ## Step 3: Write the project files
 
 ### 3a: Update CLAUDE.md

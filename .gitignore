@@ -30,3 +30,9 @@ coverage/
 
 # Claude memory (per-user, not project data)
 # Memory is stored in ~/.claude/projects/ by folder path
+
+# Graphify output (generated, not source)
+graphify-out/
+
+# MemPalace data (per-user, stored in ~/.mempalace/)
+# The palace itself lives outside the repo — only mempalace.yaml config is tracked

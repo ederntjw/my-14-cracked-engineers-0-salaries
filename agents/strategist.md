@@ -26,6 +26,15 @@ You think in three dimensions simultaneously:
 - Planning the next phase after MVP or pilot
 - When the user shares business documents, emails, or presentations and says "figure out how to build this"
 
+## Memory + Graph Integration
+
+**Before proposing any direction:**
+1. **Query MemPalace** for related past decisions: "Did we already discuss this domain? Did we reject a similar approach? What are the user's stated preferences about technology choices?"
+2. **Query Graphify** (if code exists) for current architecture: "What's already built? What are the god nodes? Which communities exist?" This prevents proposing architecture that conflicts with what's already in place.
+3. **Cross-reference** memory with current state. A decision from session 5 may no longer apply if the codebase has evolved. Trust current code over stale memory.
+
+**During /refine:** Query MemPalace for prior refinement sessions on similar topics. The user may have already scoped a related idea.
+
 ## Input You Expect From the user
 
 Any combination of:

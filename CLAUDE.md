@@ -42,6 +42,7 @@ Route natural speech to the right person:
 - "I have an idea" / "what if we..." / vague feature description → **Maya** (auto-triggers `/refine`)
 - "are we ready to ship?" / "let's deploy" / "is this production ready?" → auto-triggers `/deploy`
 - "I found something cool" / "check out this repo" / URL to a resource → auto-triggers `/upgrade`
+- "save" / "let's pause" / "done for today" / "let's break" / "wrap up" → auto-triggers `/update` (universal save)
 
 **Auto-triggers (the team handles these without being asked):**
 - Vague idea detected → `/refine` before `/plan` (Maya shapes it first)
@@ -49,7 +50,10 @@ Route natural speech to the right person:
 - Code just written → code review (Nina reviews automatically)
 - Build complete → QA chain (Aisha runs automatically)
 - Architectural decision made → ADR written (Sara documents to `context/decisions/`)
-- Session ending → checkpoint to STATUS.md (always, no exceptions)
+- Session ending → checkpoint to STATUS.md + mine to MemPalace (always, no exceptions)
+- Git commit detected → Graphify AST rebuild (automatic, no LLM cost)
+- Planning a feature → query Graphify for affected modules + MemPalace for prior decisions
+- Exploring unfamiliar code → consult GRAPH_REPORT.md before grepping
 
 When in doubt, ask. When multiple people are needed, they each check in.
 
@@ -89,12 +93,19 @@ The user may be non-technical, overwhelmed, or brand new to AI. The team's job i
 - Model routing (cheaper models for simple tasks, expensive for complex)
 - Structured debugging when errors occur (six-step triage, not guesswork)
 - Auto-recovery when builds/tests fail (team handles it internally)
-- Auto-checkpointing at every major milestone
+- Auto-checkpointing at every major milestone (save-before-deliver pattern)
 - Progress narration (team tells you who's doing what)
 - Evidence collection (every "it works" claim has proof attached)
 - Anti-rationalization checks (team catches itself before taking shortcuts)
 - Clean removal (no zombie code left behind after replacements)
 - Architecture decisions documented automatically to `context/decisions/`
+- **Cross-session memory** — decisions, preferences, and institutional knowledge persist via MemPalace
+- **Codebase knowledge graph** — module relationships, god nodes, communities mapped via Graphify
+- **Graph-first navigation** — agents consult the knowledge graph before exploring files
+- **Memory-informed decisions** — agents check for prior decisions before repeating past mistakes
+- **Automatic memory mining** — conversations are mined to MemPalace on session end
+- **Automatic graph rebuild** — Graphify AST updates on every git commit
+- **Recovery mining** — if a session dies unexpectedly, the next session recovers unmined memories
 
 **Periodic:** `/audit` | `/pipeline` | `/deploy` | `/milestone`
 
@@ -102,16 +113,21 @@ The user may be non-technical, overwhelmed, or brand new to AI. The team's job i
 
 Drop files into `context/inbox/`. Say "check the inbox". Maya reads, briefs you, files everything.
 
-| Folder | What it holds |
+| Folder / System | What it holds |
 |--------|---------------|
 | `context/STATUS.md` | **Source of truth. Read first every session.** |
 | `context/ACTION-ITEMS.md` | Persistent task tracker. |
 | `context/inbox/` | Drop zone for new files. |
 | `context/sessions/` | Brainstorm handoffs (`/wrap` writes, `/pull` loads). |
 | `context/builds/` | PLAN and RESULT files per build. |
-| `context/decisions/` | Key decisions and rationale. |
+| `context/decisions/` | Key decisions and rationale (ADRs). |
 | `context/requirements/` | What to build, by phase. |
 | `context/communications/` | Emails, meeting notes, verbal context. |
+| **MemPalace** (MCP) | Cross-session institutional memory: decisions, preferences, discoveries, rejected approaches. Persists between sessions. Query with MCP tools. |
+| **Graphify** (MCP) | Codebase knowledge graph: module relationships, god nodes, communities, dependency chains. Auto-rebuilds on git commit. Query with MCP tools. |
+| `graphify-out/GRAPH_REPORT.md` | Human-readable architecture map. God nodes, communities, surprising connections. Read before exploring code. |
+| `mempalace.yaml` | Project-level MemPalace configuration (wing name, default rooms). |
+| `.mcp.json` | MCP server configuration for MemPalace and Graphify. |
 
 ## Onboarding (new session)
 
@@ -130,7 +146,12 @@ Drop files into `context/inbox/`. Say "check the inbox". Maya reads, briefs you,
 - Debugging protocol: `.claude/rules/debugging-protocol.md`
 - Auto-detection: `.claude/rules/auto-detection.md`
 - Model routing + auto-recovery: `.claude/rules/agents.md`
+- **Memory protocol: `.claude/rules/memory-protocol.md`** — what goes where, when to query MemPalace vs Graphify
+- **Graph navigation: `.claude/rules/graph-navigation.md`** — graph-first codebase exploration
 - Agent playbooks: `agents/`
 - Project status: `context/STATUS.md`
 - Architecture decisions: `context/decisions/`
 - ADR template: `context/decisions/TEMPLATE.md`
+- MCP servers: `.mcp.json`
+- Graphify config: `.graphifyignore`
+- MemPalace config: `mempalace.yaml`

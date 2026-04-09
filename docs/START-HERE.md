@@ -16,6 +16,21 @@ The team plans before building, tests everything, reviews its own code, checks s
 
 ---
 
+## Dependencies (optional but recommended)
+
+The team works out of the box with just Claude Code. For long-term memory and codebase understanding, install these two tools:
+
+```bash
+pip install graphifyy[all] mempalace
+```
+
+- **MemPalace** — remembers decisions, preferences, and institutional knowledge across sessions. So the team never asks you the same question twice.
+- **Graphify** — builds a map of your codebase so the team understands how everything connects. New sessions start with full architectural awareness instead of exploring from scratch.
+
+Both are optional. The team handles setup during onboarding if they're not installed.
+
+---
+
 ## How to start
 
 ### Step 1: Open the folder
@@ -70,6 +85,9 @@ You don't need to ask for any of this. It just happens:
 - **Catches itself taking shortcuts** — every critical workflow has built-in checks that prevent the team from skipping steps
 - **Documents decisions** — architectural choices get recorded so no one has to re-explain why something was built a certain way
 - **Saves progress** — the team checkpoints automatically so the next session picks up exactly where this one left off
+- **Remembers everything** — decisions, preferences, and institutional knowledge persist across sessions via MemPalace (if installed)
+- **Maps the codebase** — module relationships, core abstractions, and architecture are mapped via Graphify (if installed). New sessions start with full understanding instead of exploring from scratch
+- **Recovers from crashes** — if a session dies unexpectedly, the next session automatically recovers any unmined context
 
 ---
 
@@ -148,5 +166,7 @@ Most AI coding tools generate code when you ask. This team operates like a real 
 - **Scope discipline** — so your project doesn't balloon into something unfinishable
 - **Clean removal** — so replaced code gets fully deleted, not left as dead weight
 - **Progress saving** — so every session picks up exactly where the last one left off
+- **Institutional memory** — so decisions, preferences, and context survive across sessions, weeks, and months
+- **Codebase awareness** — so the team understands the full architecture before making changes
 
 The result: production-grade software built as if your livelihood, income, and reputation depend on it. Because for many founders, they do.
