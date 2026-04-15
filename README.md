@@ -2,7 +2,7 @@
 
 **You talk. They build. 14 AI specialists that plan, build, test, review, and ship production software.**
 
-I built this with no CS degree. My background is a Master's in Accounting and Financial Management. Today I use this exact team to build and sell software solutions worth tens of thousands to hundreds of thousands of dollars. This is the same system I use every day, now open so you can do the same.
+Built by a non-technical founder with no CS degree. This is the same system used to build and sell software solutions worth hundreds of thousands to millions of dollars. Now available so you can do the same.
 
 ---
 

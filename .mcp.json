@@ -1,13 +1,13 @@
 {
   "mcpServers": {
     "mempalace": {
-      "command": "python3",
-      "args": ["-m", "mempalace.mcp_server"],
+      "command": "bash",
+      "args": ["-c", "source ~/.claude-tools/bin/activate && python3 -m mempalace.mcp_server"],
       "description": "MemPalace: persistent cross-session memory. Stores decisions, preferences, discoveries, and institutional knowledge."
     },
     "graphify": {
-      "command": "python3",
-      "args": ["-m", "graphify.serve", "graphify-out/graph.json"],
+      "command": "bash",
+      "args": ["-c", "source ~/.claude-tools/bin/activate && python3 -m graphify.serve graphify-out/graph.json"],
       "description": "Graphify: codebase knowledge graph. Maps module relationships, god nodes, communities."
     }
   }

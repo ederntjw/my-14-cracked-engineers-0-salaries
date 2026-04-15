@@ -1,7 +1,7 @@
 {
-  "name": "eugenes-engineering-team",
+  "name": "14-cracked-engineers",
   "version": "1.0.0",
-  "description": "Eugene's engineering team — 14 specialist AI agents, a 9-step build workflow, and a full context system for building production software",
+  "description": "14 specialist AI engineers, a 9-step build workflow, and a full context system for building production software",
   "private": true,
   "keywords": [
     "claude-code",
@@ -11,7 +11,8 @@
     "software-engineering"
   ],
   "author": {
-    "name": "Eugene Zhang"
+    "name": "Eugene Zhang",
+    "url": "https://www.linkedin.com/in/eugenezhangco/"
   },
   "license": "UNLICENSED",
   "engines": {
