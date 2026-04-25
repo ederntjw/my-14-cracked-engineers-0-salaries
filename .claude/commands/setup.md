@@ -200,6 +200,8 @@ After getting answers, proceed to **Phase 4: Write the project files** below.
 
 ## Phase 4: Write the project files
 
+Before writing any config files, read `docs/CLAUDE-CODE-BEST-PRACTICES.md` — it covers CLAUDE.md line limits, what to include/exclude, and how to structure rules, skills, and hooks.
+
 ### 4a: Update CLAUDE.md
 
 Read `CLAUDE.md`. Find the `## PROJECT CONTEXT` section. Replace ALL placeholder text (`[PLACEHOLDER]`) with the real answers. Keep the section structure intact. Do not touch any other section of CLAUDE.md.
