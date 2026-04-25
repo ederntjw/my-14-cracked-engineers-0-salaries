@@ -22,14 +22,16 @@ rooms:
   - deployment       # Hosting, CI/CD, environment configuration
   - data             # Database schema decisions, migration history, pipeline choices
 
-# Mining configuration
-mining:
-  # Auto-mine conversations on session end
-  auto_mine: true
-  # Categories to extract from conversations
-  extract:
-    - decisions       # "We decided to..." "Let's go with..."
-    - preferences     # "I prefer..." "Don't use..." "I hate..."
-    - discoveries     # "Found out that..." "Turns out..."
-    - problems        # "The bug was..." "It broke because..."
-    - milestones      # "Shipped..." "Completed..." "Launched..."
+# NOTE: There is no auto-mining. The MemPalace public API does not expose a
+# transcript-mining function, and the session-stop hook does NOT call one.
+# Memory persistence happens via explicit `mempalace_add_drawer` and
+# `mempalace_kg_add` calls during the /update slash command. The categories
+# below are kept as a reference for what to save during /update.
+#
+# Categories the team should look for when calling mempalace_add_drawer:
+extract_categories:
+  - decisions       # "We decided to..." "Let's go with..."
+  - preferences     # "I prefer..." "Don't use..." "I hate..."
+  - discoveries     # "Found out that..." "Turns out..."
+  - problems        # "The bug was..." "It broke because..."
+  - milestones      # "Shipped..." "Completed..." "Launched..."

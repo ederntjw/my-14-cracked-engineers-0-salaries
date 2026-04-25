@@ -1,12 +1,33 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git branch:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git checkout:*)",
+      "Bash(git switch:*)",
+      "Bash(git stash:*)",
+      "Bash(git fetch:*)",
+      "Bash(git pull:*)",
+      "Bash(git rebase:*)",
+      "Bash(git merge:*)",
+      "Bash(git restore:*)",
+      "Bash(git remote:*)",
+      "Bash(git tag:*)",
+      "Bash(git config:*)",
+      "Bash(git init:*)",
+      "Bash(git clone:*)",
+      "Bash(git bisect:*)",
+      "Bash(git blame:*)",
+      "Bash(git reflog:*)",
       "Bash(npm:*)",
       "Bash(npx:*)",
       "Bash(node:*)",
       "Bash(gh:*)",
-      "Bash(curl:*)",
       "Bash(ls:*)",
       "Bash(cat:*)",
       "Bash(mkdir:*)",
@@ -20,7 +41,13 @@
       "Bash(echo:*)",
       "Bash(which:*)",
       "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(rg:*)",
       "Bash(sort:*)",
+      "Bash(stat:*)",
+      "Bash(chmod:*)",
+      "Bash(touch:*)",
+      "Bash(diff:*)",
       "Bash(jq:*)",
       "Bash(python3:*)",
       "Bash(pip:*)",
@@ -40,8 +67,43 @@
     ],
     "deny": [
       "Bash(rm -rf:*)",
+      "Bash(rm -fr:*)",
+      "Bash(rm -r:*)",
       "Bash(del /s:*)",
-      "Bash(format:*)"
+      "Bash(format:*)",
+      "Bash(sudo:*)",
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "Bash(git push --force-with-lease:*)",
+      "Bash(git reset --hard:*)",
+      "Bash(git clean -fd:*)",
+      "Bash(git clean -df:*)",
+      "Bash(git branch -D:*)",
+      "Bash(curl * | sh)",
+      "Bash(curl * | bash)",
+      "Bash(curl *|sh)",
+      "Bash(curl *|bash)",
+      "Bash(wget * | sh)",
+      "Bash(wget * | bash)",
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./**/.env)",
+      "Read(./**/.env.*)",
+      "Read(./**/credentials.json)",
+      "Read(./**/secrets.json)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Edit(./LICENSE)"
+    ],
+    "ask": [
+      "Bash(curl:*)",
+      "Bash(wget:*)",
+      "Bash(rm:*)",
+      "Bash(git push:*)",
+      "Bash(brew install:*)",
+      "Bash(apt:*)",
+      "Bash(apt-get:*)",
+      "Bash(yum:*)"
     ]
   },
   "hooks": {
@@ -67,6 +129,17 @@
             "command": "if [ -f \"$CLAUDE_PROJECT_DIR/graphify-out/graph.json\" ]; then echo '{\"hookSpecificOutput\":{\"suppressOutput\":false,\"message\":\"graphify: Knowledge graph available. Read graphify-out/GRAPH_REPORT.md for god nodes, communities, and module relationships before searching raw files. Use the Graphify MCP server (query_graph, get_neighbors, shortest_path) for targeted queries.\"}}'; fi",
             "timeout": 3,
             "statusMessage": "Checking knowledge graph..."
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/pre-bash-search-detect.sh\"",
+            "timeout": 3,
+            "statusMessage": "Checking for graph-bypassable searches..."
           }
         ]
       }

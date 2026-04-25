@@ -45,7 +45,7 @@ This is the most important phase. Before asking a single question, address what 
 >
 > You've got 14 engineers in this folder — planners, builders, testers, security people, the whole thing. They work like a real team. You just talk to them in plain English, describe what you want, and they handle everything else.
 >
-> You can't break anything. There are no wrong questions. If you say something we don't understand, we'll ask. If something goes wrong, we fix it ourselves. You're the boss — we do the work.
+> There are no wrong questions. If you say something we don't understand, we'll ask. If something goes wrong, we can help you fix it. You're the lead — we do the work.
 >
 > Let me get the team set up for you. I'll handle the technical stuff — you just answer a few simple questions. Takes about 2 minutes."
 
@@ -72,9 +72,12 @@ If Python 3 is NOT installed:
 > "I need to install one thing on your computer to unlock the team's full capabilities — it's a programming language called Python that runs some of our tools behind the scenes. You'll never need to touch it yourself. Can I go ahead and install it?"
 
 If they say yes, guide them based on their OS:
-- **Mac:** `brew install python3` (if brew exists) or direct them to python.org/downloads
+
+- **Mac:** First check if Homebrew exists with `command -v brew`.
+  - If brew exists: run `brew install python3`
+  - If brew is missing: direct them to python.org/downloads/macos — "Download the macOS installer for the latest Python 3, double-click it, click through the prompts. That's it."
 - **Windows:** Direct them to python.org/downloads — "Download the one that says 'Latest Python 3', run the installer, and **make sure to check the box that says 'Add Python to PATH'** — that's the only important step."
-- **Linux:** `sudo apt install python3 python3-pip` or equivalent
+- **Linux:** `sudo apt install python3 python3-pip python3-venv` (Debian/Ubuntu) or equivalent for their distro.
 
 If they say no or later, note it and continue. The team works without MemPalace/Graphify — just without long-term memory and codebase mapping.
 
@@ -91,14 +94,19 @@ python3 -m ensurepip --upgrade 2>/dev/null || python3 -m pip --version 2>/dev/nu
 
 Don't explain what pip is unless they ask. Just fix it silently.
 
-#### Check 3: MemPalace and Graphify
+#### Check 3: MemPalace and Graphify (venv install — matches .mcp.json)
+
+**CRITICAL:** The `.mcp.json` file activates a virtualenv at `~/.claude-tools` before launching the MemPalace and Graphify MCP servers. We MUST install into THAT venv, not system Python — otherwise the MCP servers won't find the packages and the user will think the tools are broken.
+
+First, check if the venv already exists and has both tools:
 
 ```bash
-python3 -c "import mempalace" 2>/dev/null && echo "mempalace: installed" || echo "mempalace: not installed"
-python3 -c "import graphify" 2>/dev/null && echo "graphify: installed" || echo "graphify: not installed"
+~/.claude-tools/bin/python3 -c "import mempalace, graphify" 2>/dev/null && echo "venv ready" || echo "venv needs setup"
 ```
 
-If either is missing (and Python + pip exist), explain simply and install:
+If the venv is already ready, skip to Check 4.
+
+If the venv needs setup (missing or incomplete), explain simply:
 
 > "I'm going to install two tools that make the team much smarter over time:
 >
@@ -106,26 +114,69 @@ If either is missing (and Python + pip exist), explain simply and install:
 >
 > **Codebase mapping** — so the team understands how your code connects together. Helps us work faster and avoid breaking things.
 >
-> Installing now — this takes about 30 seconds."
+> Setting up now — this takes about 60 seconds."
 
-Then run:
+Then run this exact sequence (creates the venv + installs both tools):
+
 ```bash
-pip3 install graphifyy[all] mempalace
+# 1. Create the virtualenv if it doesn't exist
+[ -d ~/.claude-tools ] || python3 -m venv ~/.claude-tools
+
+# 2. Upgrade pip inside the venv
+~/.claude-tools/bin/python3 -m pip install --upgrade pip
+
+# 3. Install both tools INTO the venv (not system Python)
+~/.claude-tools/bin/python3 -m pip install mempalace 'graphifyy[all]'
 ```
 
-If the install fails, try:
+After install, verify both packages import from the venv:
+
 ```bash
-python3 -m pip install graphifyy[all] mempalace
+~/.claude-tools/bin/python3 -c "import mempalace; import graphify; print('OK')"
 ```
 
-If that also fails, don't panic. Tell the user:
+If verification prints `OK`, the install worked. The MCP servers will pick this up automatically on the next Claude Code session.
+
+**Then install the Graphify git hooks** so the codebase graph auto-rebuilds on every commit:
+
+```bash
+cd "$CLAUDE_PROJECT_DIR" && ~/.claude-tools/bin/graphify hook install
+```
+
+Verify with:
+```bash
+~/.claude-tools/bin/graphify hook status
+```
+
+You should see `post-commit: installed`. Without this step, the graph never updates after the initial build.
+
+If install fails (network errors, permission issues, etc.), tell the user:
 > "Those tools didn't install — no big deal. The team works perfectly without them, you just won't have long-term memory between sessions. We can try again later if you want."
 
 Continue with onboarding either way. These are enhancements, not requirements.
 
+**Why a venv?** A virtualenv is a self-contained Python install that doesn't touch the system. It avoids permission errors, doesn't conflict with anything else on the user's machine, and matches what `.mcp.json` expects.
+
 #### Check 4: MCP server configuration
 
-Read `.mcp.json` to verify the MemPalace and Graphify MCP servers are configured. They should already be there since the file ships with the template. If missing, recreate them.
+Read `.mcp.json` to verify the MemPalace and Graphify MCP servers are configured. They should already be there since the file ships with the template. The `command` field in each server entry should reference `~/.claude-tools/bin/activate`. If the file is missing entirely, recreate it with this content:
+
+```json
+{
+  "mcpServers": {
+    "mempalace": {
+      "command": "bash",
+      "args": ["-c", "source ~/.claude-tools/bin/activate && python3 -m mempalace.mcp_server"],
+      "description": "MemPalace: persistent cross-session memory."
+    },
+    "graphify": {
+      "command": "bash",
+      "args": ["-c", "source ~/.claude-tools/bin/activate && python3 -m graphify.serve graphify-out/graph.json"],
+      "description": "Graphify: codebase knowledge graph."
+    }
+  }
+}
+```
 
 #### Summary to user
 
@@ -208,7 +259,15 @@ Read `CLAUDE.md`. Find the `## PROJECT CONTEXT` section. Replace ALL placeholder
 
 For the "Story So Far" and "What Exists Today" sections, write natural prose based on what the user told you.
 
-### 4b: Write context/STATUS.md
+### 4b: Update mempalace.yaml with the project name
+
+Read `mempalace.yaml`. Find the line that starts with `wing:` and replace its value with the project name (slugified — lowercase, hyphens for spaces, no special characters).
+
+For example, if the project name is "Budget Buddy 2026", set `wing: budget-buddy-2026`.
+
+This is critical: each project gets its own MemPalace wing. Without this step, every project shares the default `wing: project` and memories from different projects collide.
+
+### 4c: Write context/STATUS.md
 
 Write `context/STATUS.md` with this structure:
 
@@ -332,11 +391,15 @@ The team runs through this checklist during Phase 2. The user sees simple explan
 | # | Check | How to verify | How to fix | Required? |
 |---|-------|--------------|-----------|-----------|
 | 1 | Claude Code running | They're talking to you (obviously yes) | N/A | Yes |
-| 2 | Python 3 installed | `python3 --version` | Install via brew/apt/python.org | No (but needed for 4-5) |
-| 3 | pip installed | `pip3 --version` | `python3 -m ensurepip --upgrade` | No (but needed for 4-5) |
-| 4 | MemPalace installed | `python3 -c "import mempalace"` | `pip3 install mempalace` | No (recommended) |
-| 5 | Graphify installed | `python3 -c "import graphify"` | `pip3 install graphifyy[all]` | No (recommended) |
-| 6 | MCP servers configured | Read `.mcp.json` | Ships with template, recreate if missing | No (needed for 4-5 to work with Claude) |
-| 7 | Node.js installed | `node --version` | They have it if Claude Code is running via npm | Yes (implicit) |
+| 2 | Python 3 installed | `python3 --version` | Install via brew/apt/python.org | No (but needed for 4-7) |
+| 3 | venv module available | `python3 -m venv --help` | Linux: `sudo apt install python3-venv`. Mac/Win: ships with Python. | No (needed for 4) |
+| 4 | `~/.claude-tools` venv exists | `[ -d ~/.claude-tools ]` | `python3 -m venv ~/.claude-tools` | No (needed for 5-6) |
+| 5 | MemPalace installed in venv | `~/.claude-tools/bin/python3 -c "import mempalace"` | `~/.claude-tools/bin/python3 -m pip install mempalace` | No (recommended) |
+| 6 | Graphify installed in venv | `~/.claude-tools/bin/python3 -c "import graphify"` | `~/.claude-tools/bin/python3 -m pip install 'graphifyy[all]'` | No (recommended) |
+| 7 | Graphify git hooks installed | `~/.claude-tools/bin/graphify hook status` shows `post-commit: installed` | `cd $CLAUDE_PROJECT_DIR && ~/.claude-tools/bin/graphify hook install` | No (needed for auto-rebuild) |
+| 8 | MCP servers configured | Read `.mcp.json` — should reference `~/.claude-tools/bin/activate` | Ships with template, recreate if missing | No (needed for 5-6 to work with Claude) |
+| 9 | Node.js installed | `node --version` | They have it if Claude Code is running via npm | Yes (implicit) |
 
-Items 2-6 are the "full capabilities" path. The team works without them — it just doesn't have long-term memory or codebase mapping. Always frame missing items as "we can add this later" not "something is wrong."
+Items 2-8 are the "full capabilities" path. The team works without them — it just doesn't have long-term memory or codebase mapping. Always frame missing items as "we can add this later" not "something is wrong."
+
+**Critical:** All Python checks use `~/.claude-tools/bin/python3`, NOT system `python3`. The MCP servers in `.mcp.json` activate this exact venv before launching MemPalace and Graphify, so installing into system Python won't work — the MCP servers won't find the packages.

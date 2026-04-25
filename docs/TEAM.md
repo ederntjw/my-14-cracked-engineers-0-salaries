@@ -82,7 +82,7 @@ You don't manage them. Describe what you want and the right people show up.
 
 The team has two systems that persist knowledge across sessions:
 
-- **MemPalace** — stores decisions, preferences, rejected approaches, stakeholder constraints, and institutional knowledge. Mined automatically from conversations. A new session knows what you told the team three months ago.
-- **Graphify** — maps the codebase structure: how modules connect, which are core abstractions, which areas are tightly coupled. Auto-rebuilds on every commit. A new session understands the architecture in seconds, not minutes.
+- **MemPalace** — stores decisions, preferences, rejected approaches, stakeholder constraints, and institutional knowledge. The team explicitly persists key items via `mempalace_add_drawer` during `/update` (there is no auto-mining). A new session knows what you told the team three months ago.
+- **Graphify** — maps the codebase structure: how modules connect, which are core abstractions, which areas are tightly coupled. Auto-rebuilds on every commit via a Git post-commit hook installed during `/setup`. A new session understands the architecture in seconds, not minutes.
 
-Both are optional (installed via `pip install graphifyy[all] mempalace`) but highly recommended for projects lasting more than a few sessions.
+Both are optional. The first-run `/setup` flow installs them into an isolated virtualenv at `~/.claude-tools` (matching `.mcp.json`) — you never touch system Python.

@@ -107,7 +107,37 @@ If significant decisions were made this session, create or update files in `cont
 - Date
 - Impact on the build
 
-## Step 7: Confirm
+## Step 7: Save to MemPalace (REQUIRED if installed)
+
+There is no auto-mining — explicit calls during `/update` are the ONLY way memories persist across sessions. Skipping this step means the next session starts blind to anything important from this one.
+
+First check availability: call `mempalace_status`. If it returns an error or "not configured", skip this step. If it returns OK, proceed:
+
+For each significant item from this session, call `mempalace_add_drawer` with the appropriate room:
+
+| Type of memory | Room |
+|---|---|
+| Architectural decision (chose X over Y) | `decisions` |
+| User preference ("I always want X", "never do Y") | `preferences` |
+| Stakeholder constraint (deadline, requirement, scope limit) | `stakeholders` |
+| Bug discovered + root cause | `bugs` |
+| Feature scope decision (in/out, MVP cut) | `features` |
+| Performance optimization or bottleneck found | `performance` |
+| Security decision or compliance requirement | `security` |
+| Deployment / hosting / CI choice | `deployment` |
+| Database / pipeline / migration choice | `data` |
+| Anything else worth remembering | `architecture` (catch-all) |
+
+For each call:
+- `agent_name`: which team member is saving (e.g., "Sara", "Maya", "Jake")
+- `entry`: 2-3 sentences capturing the WHAT and WHY (not the how — that's in the code)
+- `room`: from the table above
+
+Then for any structured fact-relationships worth indexing (e.g., "AuthMiddleware depends on JWT", "BillingService uses Stripe"), call `mempalace_kg_add` with subject/predicate/object.
+
+Do NOT save: code snippets, command output, transient state, or anything already captured in STATUS.md or ADRs. MemPalace is for the "why" and "what was rejected" — not the "what is".
+
+## Step 8: Confirm
 
 After updating, provide a brief summary:
 - What was saved/updated

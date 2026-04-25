@@ -23,10 +23,10 @@ The team has five places to store information. Every piece of data has exactly o
 |---|---|---|---|
 | Task completed or started | STATUS.md | Immediately after completion | Agent who finished |
 | Specific next step exists | ACTION-ITEMS.md | When identified | Agent who identifies it |
-| Architectural choice made | context/decisions/ ADR AND MemPalace | ADR: immediately. MemPalace: session-end mining | Sara (ADR), stop hook (MemPalace) |
-| User stated a preference | MemPalace only | Auto-mined at session end | Stop hook |
-| Something tried and rejected | MemPalace only | Auto-mined at session end | Stop hook |
-| Stakeholder constraint mentioned | MemPalace AND ACTION-ITEMS.md if actionable | Auto + immediately | Stop hook + relevant agent |
+| Architectural choice made | context/decisions/ ADR AND MemPalace | ADR: immediately. MemPalace: explicit save during /update | Sara (ADR), agent calling mempalace_add_drawer (MemPalace) |
+| User stated a preference | MemPalace | Explicit save during /update (or "save this") | Agent calling mempalace_add_drawer with room=preferences |
+| Something tried and rejected | MemPalace | Explicit save during /update (or "save this") | Agent calling mempalace_add_drawer with room=decisions |
+| Stakeholder constraint mentioned | MemPalace AND ACTION-ITEMS.md if actionable | MemPalace: explicit save during /update. ACTION-ITEMS: immediately | Agent calling mempalace_add_drawer + relevant agent |
 | Code committed | Graphify AST rebuild | Automatically via post-commit hook | Hook (no agent involved) |
 | Docs or architecture changed significantly | Graphify semantic re-extraction | Manually triggered or during /audit | Dave or Sara |
 | Build plan approved | context/builds/ PLAN file AND STATUS.md | Immediately after approval | Jake |

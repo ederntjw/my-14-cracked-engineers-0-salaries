@@ -95,3 +95,13 @@ Every audit MUST be saved to `context/audits/`:
 - Backend only. Skip all frontend/UI.
 - Every gap gets a fix effort estimate.
 - After the audit, ask: "Want me to fix the critical gaps now?"
+
+## After the audit completes
+
+Reset the session counter so the maintenance suggestion stops firing on next session-start:
+
+```bash
+echo 0 > context/.session-count
+```
+
+This tells the team that maintenance just happened. The counter will rebuild over the next 10 sessions before the next suggestion fires.

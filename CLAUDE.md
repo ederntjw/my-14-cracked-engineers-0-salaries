@@ -57,7 +57,7 @@ The user does NOT know slash commands. They just talk. Always lead — never wai
 - Code written → code review (Nina auto-reviews)
 - Build complete → QA chain (Aisha auto-runs)
 - Architectural decision → ADR written to `context/decisions/`
-- Session ending → checkpoint to STATUS.md + mine to MemPalace
+- Session ending → run /update to checkpoint STATUS.md and explicitly save key decisions to MemPalace (auto-mining is not wired up — explicit save is the mechanism)
 - Git commit → Graphify AST rebuild (automatic, no LLM cost)
 - Planning a feature → query Graphify for blast radius + MemPalace for prior decisions
 - Exploring code → consult `graphify-out/GRAPH_REPORT.md` before grepping
@@ -83,8 +83,42 @@ The user does NOT know slash commands. They just talk. Always lead — never wai
 
 Full pipeline details and what-happens-automatically list: `docs/PIPELINE.md`
 
-## Context and Rules
+## Slash Commands (the team triggers these — user never types them)
 
-**Context:** `context/STATUS.md` (source of truth) | `context/ACTION-ITEMS.md` | `context/inbox/` | `context/decisions/` | `context/builds/` | MemPalace (MCP, cross-session memory) | Graphify (MCP, codebase knowledge graph)
+**Setup & status:** `/setup` (first run) | `/status` (read STATUS.md) | `/explain` (translate what just happened)
 
-**Rules:** All behavioral rules, protocols, and agent playbooks live in `.claude/rules/` and `agents/`. Key refs: `docs/PLAYBOOK.md` | `docs/TEAM.md` | `docs/START-HERE.md`
+**Plan & scope:** `/refine` (sharpen vague idea) | `/plan` (break into tasks) | `/pull` (load brainstorm handoff) | `/wrap` (close brainstorm)
+
+**Build & verify:** `/build-fix` (fix errors) | `/test` (run tests) | `/verify` (acceptance check) | `/qa` (full QA chain) | `/golden` (pipeline quality check)
+
+**Review & ship:** `/review` (code review) | `/devils-advocate` (adversarial review) | `/audit` (codebase audit) | `/deploy` (pre-launch checklist)
+
+**Memory & reporting:** `/update` (save everything) | `/inbox` (process new docs) | `/report` (master report) | `/milestone` (milestone snapshot) | `/upgrade` (incorporate external resource) | `/pipeline` (run data pipeline)
+
+## Context Directories
+
+| Path | Purpose |
+|------|---------|
+| `context/STATUS.md` | Source of truth — current state, last action, next step |
+| `context/ACTION-ITEMS.md` | Open tasks, blockers, priorities |
+| `context/inbox/` | Drop zone for new documents (briefs, emails, screenshots) |
+| `context/decisions/` | Architectural Decision Records (ADRs) |
+| `context/builds/` | Plan files + QA verdicts per build wave |
+| `context/sessions/` | Brainstorm session handoffs |
+| `context/communications/` | Stakeholder/partner correspondence |
+| `context/requirements/` | Project requirements and specs |
+| `context/stakeholders/` | Stakeholder profiles, constraints, preferences |
+| `context/audits/` | Codebase audit reports (from Dave) |
+| `context/reports/` | Generated reports (milestones, status snapshots) |
+| `context/versions/` | Versioned snapshots of key context |
+| `context/archive/` | Old/superseded context — keep for reference |
+
+External: **MemPalace** (MCP, cross-session memory) | **Graphify** (MCP, codebase knowledge graph)
+
+## Rules
+
+All behavioral rules, protocols, and agent playbooks live in `.claude/rules/` and `agents/`. Key refs: `docs/PLAYBOOK.md` | `docs/TEAM.md` | `docs/START-HERE.md`
+
+## Skills
+
+`.claude/skills/` contains domain skills auto-activated by Claude Code based on the task at hand (frontend work pulls in `taste-design`, backend work pulls in `backend-patterns`, security work pulls in `security-review`, etc.). The team does not invoke them manually — Claude Code surfaces them as relevant. Treat them as ambient expertise the team can draw on, not commands to call.

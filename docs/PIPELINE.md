@@ -16,7 +16,7 @@ The pipeline runs in this order. The team handles transitions automatically.
 6. **Build** (Max + Liam) — Tests first, then code. Never 100+ lines without testing. Build in vertical slices. Verify loop: build → verify → fix → verify → until clean. All checks require actual command output as evidence.
 7. **QA** (Aisha — automatic, self-healing) — Runs immediately after build. Full chain: tests → investigation → code review → plan verification → human check → SHIP or HOLD. If HOLD, Aisha self-heals (up to 3 cycles). Only escalates when a human decision is genuinely needed.
 8. **`/deploy`** — Pre-launch safety checklist + rollback plan. Only when shipping to production.
-9. **`/update`** — Save everything to STATUS.md and mine to MemPalace. Never skip.
+9. **`/update`** — Save everything to STATUS.md, ACTION-ITEMS.md, ADRs, and explicitly persist key decisions to MemPalace via `mempalace_add_drawer`. There is no auto-mining — this step is the only memory persistence mechanism. Never skip.
 
 ## What Happens Automatically
 
@@ -33,11 +33,10 @@ The user never needs to ask for any of these:
 - Anti-rationalization checks (team catches itself before taking shortcuts)
 - Clean removal (no zombie code left behind after replacements)
 - Architecture decisions documented to `context/decisions/`
-- Cross-session memory mined to MemPalace on session end
-- Codebase knowledge graph rebuilt on every git commit (Graphify, no LLM cost)
+- Codebase knowledge graph rebuilt on every git commit (Graphify post-commit hook, no LLM cost)
 - Graph-first navigation (agents consult GRAPH_REPORT.md before grepping)
 - Memory-informed decisions (agents check MemPalace before repeating past mistakes)
-- Recovery mining if session died unexpectedly
+- Stop hook flags whether `/update` ran — next session warns the user if memory was likely not saved
 
 ## Periodic Commands
 

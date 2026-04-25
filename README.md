@@ -57,11 +57,11 @@ The biggest problem with AI engineering: every new session starts with amnesia. 
 
 | System | What it remembers | How |
 |---|---|---|
-| **MemPalace** | Decisions, preferences, rejected approaches, stakeholder constraints | Conversations auto-mined on session end. Persists across weeks and months. |
-| **Graphify** | Every module, relationship, and core abstraction in your codebase | Knowledge graph auto-rebuilds on every commit. New sessions understand the architecture in seconds. |
+| **MemPalace** | Decisions, preferences, rejected approaches, stakeholder constraints | The team explicitly saves to MemPalace via `/update` (or whenever you say "save this"). Persists across weeks and months. |
+| **Graphify** | Every module, relationship, and core abstraction in your codebase | Knowledge graph auto-rebuilds on every commit via a Git post-commit hook installed during `/setup`. New sessions understand the architecture in seconds. |
 | **STATUS.md** | What was built, what's next, current phase | Auto-checkpointed at every milestone. |
 | **Architecture Decision Records** | Why you chose X over Y, what alternatives were considered | Written automatically when significant decisions are made. |
-| **Crash recovery** | Everything from a session that died unexpectedly | Next session auto-recovers unmined memories from the transcript. |
+| **Crash recovery** | Whether the previous session ended cleanly | Next session detects unclean closes and warns the user that recent context may not have been saved. |
 
 Session 1: the team knows nothing. Session 20: the team knows your codebase, your preferences, your stakeholder requirements, what you tried and rejected, and why the architecture is shaped the way it is.
 
@@ -74,7 +74,7 @@ Session 1: the team knows nothing. Session 20: the team knows your codebase, you
 | Code gets written | Nina reviews it, Elena checks security (in parallel) |
 | A build wave completes | Aisha runs the full QA chain automatically |
 | A git commit happens | Graphify rebuilds the codebase map (free, no LLM cost) |
-| A session ends | Conversation mined to long-term memory automatically |
+| A session ends | Stop hook saves metadata. The team explicitly persists key items to MemPalace via `/update` (it's not auto-mined) |
 | A session crashes | Next session recovers unmined context |
 | You say "save" or "done for today" | Full save to STATUS.md, action items, and long-term memory |
 | 20+ tool uses since last save | Auto-checkpoint fires without being asked |
@@ -94,15 +94,7 @@ npm install -g @anthropic-ai/claude-code
 
 Need npm? Install [Node.js](https://nodejs.org/) first (LTS version).
 
-### 2. Install long-term memory (optional, recommended)
-
-```bash
-pip install graphifyy[all] mempalace
-```
-
-Without this, the team still works but starts fresh each session. With it, the team remembers everything and understands your architecture from the first second.
-
-### 3. Open and say hello
+### 2. Open and say hello
 
 ```bash
 cd path/to/this/folder
@@ -111,7 +103,27 @@ claude
 
 Or open the folder in VS Code / Cursor with the Claude Code extension.
 
-The team detects it's a fresh setup and walks you through onboarding. Two questions, two minutes, then you're building.
+The team detects it's a fresh setup and walks you through onboarding. The first run handles everything else automatically — including installing long-term memory if you want it.
+
+### Optional: long-term memory (the team installs this for you on first run)
+
+The team uses two Python tools for cross-session memory and codebase mapping:
+- **MemPalace** — remembers decisions, preferences, and prior work between sessions
+- **Graphify** — maps your codebase so the team understands architecture instantly
+
+You don't install these yourself. During `/setup`, the team:
+1. Creates an isolated Python virtualenv at `~/.claude-tools` (doesn't touch your system Python)
+2. Installs both tools into that venv
+3. Wires them up to the MCP servers defined in `.mcp.json`
+
+Without this step, the team still works — it just starts fresh each session. With it, the team remembers everything and understands your architecture from the first second.
+
+If you want to install manually (advanced), this is what `/setup` runs:
+```bash
+python3 -m venv ~/.claude-tools
+~/.claude-tools/bin/python3 -m pip install --upgrade pip
+~/.claude-tools/bin/python3 -m pip install mempalace 'graphifyy[all]'
+```
 
 ---
 

@@ -20,7 +20,7 @@ For projects lasting weeks or months, these costs compound significantly.
 
 Integrate two complementary systems:
 
-1. **MemPalace** (institutional memory) — stores decisions, preferences, discoveries, rejected approaches, and stakeholder constraints across sessions. Uses ChromaDB for vector search with metadata-based filtering organized as wings (projects) and rooms (topics). Conversations are auto-mined on session end. Explicit saves during /update capture the most important items.
+1. **MemPalace** (institutional memory) — stores decisions, preferences, discoveries, rejected approaches, and stakeholder constraints across sessions. Uses ChromaDB for vector search with metadata-based filtering organized as wings (projects) and rooms (topics). Memory persistence is explicit: agents call `mempalace_add_drawer` and `mempalace_kg_add` during `/update` (or whenever the user says "save this"). The session-stop hook flags whether `/update` ran so the next session can warn the user if memory wasn't saved.
 
 2. **Graphify** (codebase knowledge graph) — maps module relationships, god nodes (core abstractions), and communities (domain clusters) using a two-pass extraction system: free AST parsing via tree-sitter + optional semantic extraction via Claude. Auto-rebuilds AST on every git commit. Agents consult the graph before exploring files.
 

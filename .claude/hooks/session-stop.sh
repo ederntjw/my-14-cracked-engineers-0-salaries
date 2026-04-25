@@ -1,14 +1,27 @@
 #!/bin/bash
-# Stop hook: save session metadata + trigger MemPalace conversation mining
-# Writes to .last-session which SessionStart picks up
+# Stop hook: save session metadata so the next SessionStart can pick up cleanly.
+# Writes to context/.last-session.
+#
+# Note: We do NOT auto-mine the conversation transcript. The MemPalace public
+# API does not expose a transcript-mining function — memory persistence happens
+# through explicit `mempalace_add_drawer` / `mempalace_kg_add` calls during the
+# /update slash command. This hook just flags whether /update appears to have
+# run, so the next session can warn the user if memory wasn't saved.
 
 PROJECT_DIR="${CLAUDE_PROJECT_DIR:-.}"
 LAST_SESSION="$PROJECT_DIR/context/.last-session"
 STATUS_FILE="$PROJECT_DIR/context/STATUS.md"
+SESSION_COUNT="$PROJECT_DIR/context/.session-count"
+
+# Source shared Python detection (matches .mcp.json venv).
+HOOK_DIR="$(dirname "${BASH_SOURCE[0]}")"
+# shellcheck source=lib-python.sh
+source "$HOOK_DIR/lib-python.sh"
 
 # Read stop hook input from stdin
 INPUT=$(cat)
-STOP_REASON=$(echo "$INPUT" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('stop_hook_reason','unknown'))" 2>/dev/null || echo "unknown")
+PY_FOR_PARSE=$(find_python_with json 2>/dev/null || echo "python3")
+STOP_REASON=$(echo "$INPUT" | "$PY_FOR_PARSE" -c "import sys,json; d=json.load(sys.stdin); print(d.get('stop_hook_reason','unknown'))" 2>/dev/null || echo "unknown")
 
 # Write session end marker
 cat > "$LAST_SESSION" << EOF
@@ -30,39 +43,30 @@ if [ -f "$STATUS_FILE" ]; then
     fi
 fi
 
-# --- MEMPALACE CONVERSATION MINING ---
-# Attempt to mine the current session's transcript to MemPalace.
-# This runs in the background with a short timeout to avoid blocking session close.
-# If MemPalace is not installed, this silently does nothing.
-if command -v mempalace &>/dev/null || python3 -c "import mempalace" &>/dev/null 2>&1; then
-    # Get the wing name from project config
-    WING="project"
-    if [ -f "$PROJECT_DIR/mempalace.yaml" ]; then
-        WING=$(python3 -c "import yaml; print(yaml.safe_load(open('$PROJECT_DIR/mempalace.yaml')).get('wing','project'))" 2>/dev/null || echo "project")
+# --- SESSION COUNTER (for /audit suggestions every N sessions) ---
+# Increment the counter. session-start checks this and suggests /audit when threshold hit.
+# /audit resets the counter to 0.
+CURRENT_COUNT=$(cat "$SESSION_COUNT" 2>/dev/null | tr -d '[:space:]')
+case "$CURRENT_COUNT" in
+  ''|*[!0-9]*) CURRENT_COUNT=0 ;;
+esac
+echo $((CURRENT_COUNT + 1)) > "$SESSION_COUNT"
+
+# --- MEMPALACE: NOTE WHETHER /update RAN ---
+# We do NOT auto-mine on session stop. The MemPalace API doesn't expose a
+# transcript-mining function — memory persistence happens through explicit
+# `mempalace_add_drawer` / `mempalace_kg_add` calls during /update.
+#
+# Here we just record whether STATUS.md was recently touched (a proxy for
+# whether /update ran). The next session uses this to decide if it should
+# nag the user about lost context.
+if [ "$(mempalace_available)" = "yes" ]; then
+    if [ -f "$STATUS_FILE" ] && [ "$DIFF" -lt 1800 ]; then
+        # STATUS.md updated in last 30 min — likely /update ran cleanly
+        echo "memory_saved: likely" >> "$LAST_SESSION"
+    else
+        # STATUS.md is stale — /update probably didn't run, memory may be lost
+        echo "memory_saved: unlikely" >> "$LAST_SESSION"
+        echo "memory_warning: /update did not appear to run this session — institutional memory may not have been saved to MemPalace" >> "$LAST_SESSION"
     fi
-
-    # Find the most recent Claude Code transcript for this project
-    # Claude Code stores transcripts as JSONL in ~/.claude/projects/
-    PROJECT_HASH=$(echo "$PROJECT_DIR" | python3 -c "import sys,hashlib; print(hashlib.md5(sys.stdin.read().strip().encode()).hexdigest()[:8])" 2>/dev/null)
-
-    if [ -n "$PROJECT_HASH" ]; then
-        # Mine the transcript directory — mempalace handles finding the right files
-        # Run with timeout to avoid blocking session close
-        timeout 10 python3 -c "
-from mempalace.mcp_server import tool_mine_directory
-import os, glob
-
-# Find Claude transcript directory
-claude_dir = os.path.expanduser('~/.claude/projects/')
-if os.path.isdir(claude_dir):
-    # Mine the most recent transcript files
-    try:
-        tool_mine_directory(claude_dir, wing='$WING')
-    except Exception:
-        pass  # Silent fail — don't block session close
-" 2>/dev/null &
-    fi
-
-    echo "mempalace_mined: true" >> "$LAST_SESSION"
-    echo "mempalace_mine_time: $(date '+%Y-%m-%d %H:%M')" >> "$LAST_SESSION"
 fi

@@ -115,8 +115,8 @@ You don't trigger these — they happen on their own.
 | Build completes | Reconciliation: did we build what the plan said? |
 | Git commit | Graphify AST auto-rebuilds (free). Micro-checkpoint to STATUS.md. |
 | Planning a feature | Team queries Graphify for affected modules + MemPalace for prior decisions. |
-| Session ends normally | Saves to STATUS.md + mines conversation to MemPalace. |
-| Session ends abnormally | Next session auto-recovers unmined memories. |
+| Session ends normally | Stop hook saves session metadata. Memory persists only if `/update` ran (which calls `mempalace_add_drawer` explicitly). |
+| Session ends abnormally | Stop hook flags an unclean close. Next session reads the flag and asks the user what was being worked on. |
 | You say "save" / "pause" / "done" | Full `/update` runs — saves to all layers. |
 
 ---

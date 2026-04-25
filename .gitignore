@@ -10,8 +10,12 @@ node_modules/
 .DS_Store
 Thumbs.db
 
-# Session state (auto-generated, not project data)
+# Session state and hook diagnostics (auto-generated, not project data)
 context/.last-session
+context/.in-progress
+context/.session-count
+context/.mempalace-mine.log
+context/.graphify-rebuild.log
 
 # IDE
 .vscode/

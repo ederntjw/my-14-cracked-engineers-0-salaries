@@ -18,16 +18,21 @@ The team plans before building, tests everything, reviews its own code, checks s
 
 ## Dependencies (optional but recommended)
 
-The team works out of the box with just Claude Code. For long-term memory and codebase understanding, install these two tools:
+The team works out of the box with just Claude Code. For long-term memory and codebase understanding, the team uses two Python tools.
 
-```bash
-pip install graphifyy[all] mempalace
-```
+**You don't install these yourself.** The first-run `/setup` flow handles it for you — creating an isolated virtualenv at `~/.claude-tools` (so it doesn't touch your system Python) and installing both tools into that venv to match `.mcp.json`.
 
 - **MemPalace** — remembers decisions, preferences, and institutional knowledge across sessions. So the team never asks you the same question twice.
 - **Graphify** — builds a map of your codebase so the team understands how everything connects. New sessions start with full architectural awareness instead of exploring from scratch.
 
-Both are optional. The team handles setup during onboarding if they're not installed.
+Both are optional. The team handles setup during onboarding. If you want to install manually, this is what `/setup` runs:
+
+```bash
+python3 -m venv ~/.claude-tools
+~/.claude-tools/bin/python3 -m pip install --upgrade pip
+~/.claude-tools/bin/python3 -m pip install mempalace 'graphifyy[all]'
+cd path/to/this/folder && ~/.claude-tools/bin/graphify hook install
+```
 
 ---
 
