@@ -162,11 +162,21 @@ if [ -f "$STATUS_FILE" ]; then
 fi
 
 # ACTION-ITEMS.md summary
+# Note: `grep -c` outputs "0" AND exits 1 when no matches — the `|| echo 0`
+# fallback would then APPEND a second "0", producing "0\n0" which breaks the
+# integer comparison below. We sanitize each count to a single integer.
+sanitize_count() {
+  local v="$1"
+  case "$v" in
+    ''|*[!0-9]*) echo 0 ;;
+    *) echo "$v" ;;
+  esac
+}
 if [ -f "$ACTION_ITEMS_FILE" ]; then
-  OPEN_COUNT=$(grep -c '^\- \*\*Status:\*\* open' "$ACTION_ITEMS_FILE" 2>/dev/null || echo 0)
-  IN_PROGRESS_COUNT=$(grep -c '^\- \*\*Status:\*\* in-progress' "$ACTION_ITEMS_FILE" 2>/dev/null || echo 0)
-  BLOCKED_COUNT=$(grep -c '^\- \*\*Status:\*\* blocked' "$ACTION_ITEMS_FILE" 2>/dev/null || echo 0)
-  CRITICAL_COUNT=$(grep -B1 '^\- \*\*Priority:\*\* critical' "$ACTION_ITEMS_FILE" 2>/dev/null | grep -c '^\### \[AI-' || echo 0)
+  OPEN_COUNT=$(sanitize_count "$(grep -c '^\- \*\*Status:\*\* open' "$ACTION_ITEMS_FILE" 2>/dev/null | head -1)")
+  IN_PROGRESS_COUNT=$(sanitize_count "$(grep -c '^\- \*\*Status:\*\* in-progress' "$ACTION_ITEMS_FILE" 2>/dev/null | head -1)")
+  BLOCKED_COUNT=$(sanitize_count "$(grep -c '^\- \*\*Status:\*\* blocked' "$ACTION_ITEMS_FILE" 2>/dev/null | head -1)")
+  CRITICAL_COUNT=$(sanitize_count "$(grep -B1 '^\- \*\*Priority:\*\* critical' "$ACTION_ITEMS_FILE" 2>/dev/null | grep -c '^\### \[AI-' | head -1)")
 
   if [ "$OPEN_COUNT" -gt 0 ] || [ "$IN_PROGRESS_COUNT" -gt 0 ] || [ "$BLOCKED_COUNT" -gt 0 ]; then
     CONTEXT="${CONTEXT}\n--- ACTION ITEMS ---\nOpen: $OPEN_COUNT | In Progress: $IN_PROGRESS_COUNT | Blocked: $BLOCKED_COUNT | Critical: $CRITICAL_COUNT\nRead context/ACTION-ITEMS.md for full details.\n"
